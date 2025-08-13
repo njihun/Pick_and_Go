@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIGO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <div></div>
+            <span>PIGO.kr</span>
+        </div>
+        <div class="menu-bar">
+            <div class="menu-item">asdf</div>
+            <div class="menu-item">OPTION</div>
+            <div class="menu-item">MYPAGE</div>
+            <div class="search"></div>
+            <div id="log">LogIn</div>
+        </div>
+    </header>
+    <div class="container">
+        <div id="recommend">
+            <h1>Pick & Go!</h1>
+            <form action="/action_page.php">
+                <div>
+                    <div tabindex="0">
+                        <span>장소</span>
+                        <div class="dropdown-icon"></div>
+                        <div id="cities"></div>
+                    </div>
+                    <input type="number" placeholder="인원">
+                </div>
+                <div>
+                    <button type="submit">내 취향 알아보기</button>
+                    <button type="submit">관광지 추천받기</button>
+                </div>
+            </form>
+        </div>
+        <header class="sub-header">
+            <div>
+                <div class="logo">
+                    <span>HOT PLACE</span>
+                </div>
+                <div class="menu-bar">
+                    <div class="menu-item">
+                        <span>최신순</span>
+                        <div class="dropdown-icon"></div>
+                        <div id="cities"></div>
+                    </div>
+                    <div class="menu-item">
+                        <span>성별</span>
+                        <div class="dropdown-icon"></div>
+                        <div id="cities"></div>
+                    </div>
+                    <div class="menu-item">
+                        <span>지역</span>
+                        <div class="dropdown-icon"></div>
+                        <div id="cities"></div>
+                    </div>
+                    <div class="menu-item">
+                        <span>나이별</span>
+                        <div class="dropdown-icon"></div>
+                        <div id="cities"></div>
+                    </div>
+                    <div class="menu-item">
+                        <span>관광지 타입</span>
+                        <div class="dropdown-icon"></div>
+                        <div id="cities"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="food"></div>
+                    <div class="settings"></div>
+                </div>
+            </div>
+        </header>
+        <div id="hotplace">
+            <div class="container">
+                dd
+            </div>
+
+            <footer>
+                <div>
+                    <div>
+                        <span>서비스 소개</span>
+                    </div>
+                    <div>
+                        <div>
+                            <span>한국 관광공사</span>
+                        </div>
+                        <div>
+                            <span>TourAPI</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span>Follow us</span>
+                    <div>
+                        <div data-social="github"></div>
+                        <div data-social="instagram"></div>
+                        <div data-social="facebook"></div>
+                        <div data-social="kakaotalk"></div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script type="module" src="./index.js"></script>
+</body>
+
+</html>
