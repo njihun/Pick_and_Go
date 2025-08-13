@@ -12,6 +12,129 @@ body {
     align-items: center;
 }
 
+#overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 4;
+}
+
+#login {
+    display: none;
+    width: 400px;
+    max-width: calc(100vw - 64px);
+    /* height: 30%; */
+    background-color: #ffffff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+    padding: 32px;
+    border-radius: 20px;
+}
+
+#login > *:nth-child(1) {
+    display: flex;
+}
+
+.close {
+    width: 23px;
+    height: 23px;
+    position: relative;
+    cursor: pointer;
+}
+
+.close::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 130%;
+    height: 10%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background-color: #000;
+}
+
+.close::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 130%;
+    height: 10%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    background-color: #000;
+}
+
+#login .logo {
+    justify-content: left;
+}
+
+#login > h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+#login .social > div {
+    display: flex;
+    font-size: 20px;
+    white-space: nowrap;
+    width: 100%;
+    margin-top: 30px;
+}
+
+#login .social > div:nth-child(1) > :nth-child(1) {
+    margin-right: 10px;
+}
+
+#login .social > div:nth-child(2) {
+    margin-top: 10px;
+}
+
+#login .social > div > div {
+    display: flex;
+    justify-content: center;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.kakao-logo {
+    background-image: url(./imgs/kakaotalk.png);
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.google-logo {
+    background-image: url(./imgs/google.webp);
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.apple-logo {
+    background-image: url(./imgs/apple.png);
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    filter: invert(100%);
+}
+
 header {
     width: 100%;
     display: flex;
@@ -73,6 +196,7 @@ header {
     text-align: center;
     background-color: #70B4F4;
     color: #fff;
+    cursor: pointer;
 }
 
 #recommend {

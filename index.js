@@ -2,6 +2,7 @@ import { getRegion } from "./parser.js";
 const region = await getRegion();
 const regionElement = document.querySelector('#recommend > form > div:nth-of-type(1) > div:nth-of-type(1)');
 const regionDropDown = document.getElementById('cities');
+const overlay = document.getElementById('overlay');
 regionDropDown.innerHTML = '';
 region.forEach(e => {
     const city = document.createElement('div');
@@ -27,7 +28,6 @@ region.forEach(e => {
 });
 
 document.querySelectorAll('footer > *:last-child > div > *').forEach((e) => {
-    console.log(e.dataset.social);
     e.style.backgroundImage = `url(./imgs/${e.dataset.social}.png)`;
 });
 
@@ -52,4 +52,28 @@ document.querySelectorAll('#cities > .city > #child > .city').forEach((e) => {
 regionElement.addEventListener('focusout', () => {
     document.querySelector('.dropdown-icon').classList.remove('open');
     regionDropDown.style.display = '';
+});
+
+function close(e) {
+    document.querySelectorAll('#modal > *').forEach((e) => {
+        e.style.display = 'none';
+    });
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+}
+overlay.addEventListener('click', () => {
+    close();
+});
+document.querySelectorAll('.close').forEach((e)=> {
+    e.addEventListener('click', () => {
+        close();
+    });
+});
+
+document.getElementById('log').addEventListener('click', () => {
+    document.body.style.overflow = 'hidden';
+    const login = document.getElementById('login');
+    overlay.style.display = 'block';
+    login.style.display = 'block';
+    
 });
