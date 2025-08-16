@@ -29,7 +29,6 @@ body {
     display: none;
     width: 400px;
     max-width: calc(100vw - 64px);
-    /* height: 30%; */
     background-color: #ffffff;
     position: fixed;
     top: 50%;
@@ -40,7 +39,7 @@ body {
     border-radius: 20px;
 }
 
-#login > *:nth-child(1) {
+#login>*:nth-child(1) {
     display: flex;
 }
 
@@ -79,12 +78,12 @@ body {
     justify-content: left;
 }
 
-#login > h3 {
+#login>h3 {
     margin: 0;
     font-size: 20px;
 }
 
-#login .social > div {
+#login .social>div {
     display: flex;
     font-size: 20px;
     white-space: nowrap;
@@ -92,15 +91,15 @@ body {
     margin-top: 30px;
 }
 
-#login .social > div:nth-child(1) > :nth-child(1) {
+#login .social>div:nth-child(1)> :nth-child(1) {
     margin-right: 10px;
 }
 
-#login .social > div:nth-child(2) {
+#login .social>div:nth-child(2) {
     margin-top: 10px;
 }
 
-#login .social > div > div {
+#login .social>div>div {
     display: flex;
     justify-content: center;
     border: 1px solid;
@@ -165,14 +164,23 @@ header {
     background-size: var(--header-height) var(--header-height);
 }
 
+.burger-bar {
+    display: none;
+}
+
 .menu-bar {
     display: flex;
 }
 
+.menu-bar > :first-child:not(.menu-item) {
+    display: flex;
+}
+
 .menu-item {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
     line-height: var(--header-height);
+    white-space: nowrap;
 }
 
 .menu-item:hover {
@@ -226,7 +234,7 @@ header {
 
 }
 
-#recommend > form {
+#recommend>form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -234,13 +242,13 @@ header {
     justify-content: space-evenly;
 }
 
-#recommend > form > div:nth-of-type(1) {
+#recommend>form>div:nth-of-type(1) {
     display: flex;
     width: 430px;
     justify-content: space-between;
 }
 
-#recommend > form > div:nth-of-type(1) > * {
+#recommend>form>div:nth-of-type(1)>* {
     display: flex;
     align-items: center;
     border: 1px solid #fff;
@@ -254,20 +262,21 @@ header {
     position: relative;
 }
 
-#recommend > form > div:nth-of-type(1) > * span {
+#recommend>form>div:nth-of-type(1)>* span {
     white-space: nowrap;
-    max-width: calc(160px - 20px); /* dropdown 이미지 공간 확보 */
+    max-width: calc(160px - 20px);
+    /* dropdown 이미지 공간 확보 */
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-#recommend > form > div:nth-of-type(1) > input::placeholder {
+#recommend>form>div:nth-of-type(1)>input::placeholder {
     color: #fff;
     font-size: 16px;
     transform: translateY(3px);
 }
 
-#recommend > form > div:nth-of-type(1) > input:focus {
+#recommend>form>div:nth-of-type(1)>input:focus {
     outline: none;
 }
 
@@ -278,7 +287,8 @@ header {
     rotate: -90deg;
     background-size: 40px 40px;
     background-position: center;
-    filter: invert(80%); /* 이미지 색상을 검은색에서 흰색으로 반전 */
+    filter: invert(80%);
+    /* 이미지 색상을 검은색에서 흰색으로 반전 */
 }
 
 .dropdown-icon.open {
@@ -296,20 +306,20 @@ header {
     z-index: 2;
 }
 
-#cities > .city {
+#cities>.city {
     position: relative;
     font-weight: normal;
 }
 
-#cities > .city:hover {
+#cities>.city:hover {
     background-color: #D9D9D9;
 }
 
-#cities > .city:not(:last-child) {
+#cities>.city:not(:last-child) {
     border-bottom: inherit;
 }
 
-#cities > .city > #child {
+#cities>.city>.child {
     position: absolute;
     top: -1px;
     left: 100%;
@@ -320,40 +330,40 @@ header {
     border: 1px solid #D9D9D9;
 }
 
-#cities > .city > #child {
+#cities>.city>.child {
     display: none;
 }
 
-#cities > .city:hover > #child {
+#cities>.city:hover>.child {
     display: block;
 }
 
-#cities > .city > #child > .city:not(:last-child) {
+#cities>.city>.child>.city:not(:last-child) {
     border-bottom: inherit;
 }
 
-#cities > .city > #child > .city:hover {
+#cities>.city>.child>.city:hover {
     background-color: #D9D9D9;
 }
 
-#recommend > form > div:nth-of-type(2) {
+#recommend>form>div:nth-of-type(2) {
     width: 380px;
     display: flex;
     justify-content: space-between;
 }
 
-#recommend > form > div:nth-of-type(2) > * {
+#recommend>form>div:nth-of-type(2)>* {
     padding: 12px;
     font-size: 16px;
     border-radius: 35px;
     color: #fff;
 }
 
-#recommend > form > div:nth-of-type(2) > *:nth-of-type(1) {
+#recommend>form>div:nth-of-type(2)>*:nth-of-type(1) {
     background-color: #E94E38;
 }
 
-#recommend > form > div:nth-of-type(2) > *:nth-of-type(2) {
+#recommend>form>div:nth-of-type(2)>*:nth-of-type(2) {
     background-color: #389FE9;
 }
 
@@ -366,16 +376,18 @@ header {
     z-index: 1;
 }
 
-.sub-header > div {
-    width: 80%;
+.sub-header>div {
+    width: 95%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .sub-header .logo {
     width: min-content;
     white-space: nowrap;
     line-height: var(--header-height);
+    display: flex;
+    justify-content: right;
 }
 
 .sub-header .menu-bar {
@@ -385,12 +397,12 @@ header {
     flex-wrap: wrap;
 }
 
-.sub-header > div > *:not(:nth-of-type(2)) {
-    flex: 1;
+.sub-header>div>*:not(:nth-of-type(2)) {
+    flex: 2;
 }
 
-.sub-header > div > *:nth-of-type(2) {
-    flex: 10;
+.sub-header>div>*:nth-of-type(2) {
+    flex-grow: 1;
 }
 
 .sub-header .menu-bar > .menu-item {
@@ -408,7 +420,7 @@ header {
     box-shadow: 0px 0px 3px 2px #D9D9D9;
 }
 
-.sub-header .menu-bar > .menu-item:not(:last-child) {
+.sub-header .menu-bar>.menu-item:not(:last-child) {
     margin-right: 10px;
 }
 
@@ -416,16 +428,17 @@ header {
     display: flex;
     align-items: center;
 }
-.sub-header .menu-bar > .menu-item span {
+
+.sub-header .menu-bar>.menu-item span {
     line-height: normal;
 }
 
-.sub-header > div > *:last-child {
+.sub-header>div>*:last-child {
     display: flex;
     align-items: center;
 }
 
-.sub-header > div > *:last-child > .food {
+.sub-header>div>*:last-child>.food {
     width: 40px;
     height: 40px;
     background-size: 40px 40px;
@@ -433,7 +446,7 @@ header {
     margin-right: 10px;
 }
 
-.sub-header > div > *:last-child > .settings {
+.sub-header>div>*:last-child>.settings {
     width: 40px;
     height: 40px;
     background-size: 40px 40px;
@@ -457,23 +470,23 @@ footer {
     align-items: center;
 }
 
-footer > div:nth-of-type(1) {
+footer>div:nth-of-type(1) {
     display: flex;
 }
 
-footer > div:nth-of-type(1) > div:nth-of-type(2) {
+footer>div:nth-of-type(1)>div:nth-of-type(2) {
     margin-left: 80px;
     display: flex;
     flex-direction: column;
 }
 
-footer > *:last-child {
+footer>*:last-child {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-footer > *:last-child > div {
+footer>*:last-child>div {
     display: flex;
     width: 200px;
     justify-content: space-between;
@@ -481,7 +494,7 @@ footer > *:last-child > div {
     margin-bottom: 50px;
 }
 
-footer > *:last-child > div > * {
+footer>*:last-child>div>* {
     width: 30px;
     height: 30px;
     background-size: 30px 30px;
@@ -499,7 +512,91 @@ footer > *:last-child > div > * {
     .container {
         min-width: 960px;
     }
+
     footer {
         min-width: 960px;
+    }
+}
+
+@media (max-width: 800px) {
+    .burger-bar {
+        width: var(--header-height);
+        height: var(--header-height);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .burger-bar > div {
+        width: 50%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        position: relative;
+    }
+
+    .burger-bar > div > div {
+        width: 100%;
+        height: 3px;
+        background-color: #000;
+    }
+
+    .burger-bar > div > div.open {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+
+    .menu-bar > :first-child:not(.menu-item) {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        transform: translateX(-101%);
+        height: calc(100vh - 100%);
+        display: flex;
+        flex-direction: column;
+        background-color: #D9D9D9;
+    }
+
+    .menu-item:hover {
+        background-color: #fff;
+    }
+
+    #recommend {
+        height: 320px;
+    }
+
+    #recommend>form>div:nth-of-type(1) {
+        max-width: 90vw;
+    }
+
+    #recommend>form>div:nth-of-type(1)>* {
+        max-width: calc(42vw - 32px);
+    }
+
+    #recommend>form>div:nth-of-type(1)>* span {
+        white-space: nowrap;
+        max-width: calc(calc(42vw - 32px) - 20px);
+        /* dropdown 이미지 공간 확보 */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #recommend>form>div:nth-of-type(2) {
+        max-width: 80vw;
+    }
+
+    .sub-header>div {
+        width: 97%;
+    }
+        
+    .sub-header .menu-bar>.menu-item {
+        font-size: 12px;
+        padding: 7.5px;
+        width: 78px;
+        margin: 5px;
     }
 }

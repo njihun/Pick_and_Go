@@ -1,0 +1,9 @@
+const params = new URLSearchParams(location.search);
+const code = params.get('code');
+
+const url = 'http://43.201.115.135:8080/kakao/code';
+fetch(`${url}?code=${code}`).then((res) => {
+    return res.text()
+}).then((data)=>{
+    console.log(data);
+});

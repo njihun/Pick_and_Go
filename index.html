@@ -10,14 +10,23 @@
 
 <body>
     <header>
-        <div class="logo">
+        <div class="burger-bar">
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="logo" onclick="location.reload();">
             <div></div>
             <span>PIGO.kr</span>
         </div>
         <div class="menu-bar">
-            <div class="menu-item">asdf</div>
-            <div class="menu-item">OPTION</div>
-            <div class="menu-item">MYPAGE</div>
+            <div>
+                <div class="menu-item" onclick="location.reload();">홈</div>
+                <div class="menu-item" onclick="favoriteAttractions();">관심 관광지</div>
+                <div class="menu-item" onclick="mypage();">마이페이지</div>
+            </div>
             <div class="search"></div>
             <div id="log">LogIn</div>
         </div>
@@ -124,7 +133,7 @@
             <p>로그인하고 개인 맞춤형 관광지 추천을 포함한 수많은 서비스들을 누려보세요!</p>
             <div class="social">
                 <div>
-                    <div onclick="location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=e8af967f22a2e98d8aa94bcfc421bcfa&redirect_uri=http://43.201.115.135:8080/kakao/code&response_type=code';">
+                    <div onclick="location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=e8af967f22a2e98d8aa94bcfc421bcfa&redirect_uri=https://njihun.github.io/Pick_and_Go/login/kakao.html&response_type=code';">
                         <div class="kakao-logo"></div>
                         <span>카카오</span>
                     </div>

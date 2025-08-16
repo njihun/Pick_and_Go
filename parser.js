@@ -27,3 +27,17 @@ export async function getRegion() {
     });
     return parentCities;
 }
+
+export async function getFilterList() {
+    let filterList = await fetch('./data/lclsSystmCode1_202507211653.csv');
+    filterList = (await filterList.text()).trim().split('\n');
+    filterList.splice(0, 1);
+    return filterList.map((e) => {
+        const temp = e.split(',');
+        return {
+            'Cd': temp[0],
+            'Nm': temp[1]
+        };
+    });
+    
+}
