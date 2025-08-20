@@ -462,6 +462,28 @@ header {
     justify-content: space-between;
 }
 
+#hotplace > .container {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#hotplace > .container > .attraction {
+    width: 200px;
+    min-height: 200px;
+    padding: 7px;
+    border-radius: 7px;
+    box-shadow: 0 0 4px 2px #D9D9D9;
+    background-color: #fff;
+}
+
+#hotplace > .container > .attraction > *:nth-child(1) {
+    width: 100%;
+    padding-top: 66.7%;
+    background-size: cover;
+}
+
 footer {
     width: 100%;
     border-top: 1px solid #D9D9D9;

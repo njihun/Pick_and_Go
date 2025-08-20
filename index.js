@@ -1,5 +1,6 @@
 import { getRegion } from "./parser.js";
 import { mypage, favoriteAttractions } from "./pageLoad.js";
+await import('./hotplace.js');
 window.mypage = mypage;
 window.favoriteAttractions = favoriteAttractions;
 const region = await getRegion();
@@ -83,9 +84,6 @@ document.querySelectorAll('.close').forEach((e)=> {
     });
 });
 
-console.log(location.host);
-
-
 document.getElementById('log').addEventListener('click', () => {
     document.body.style.overflow = 'hidden';
     const login = document.getElementById('login');
@@ -116,4 +114,3 @@ burgerBar.addEventListener('click', () => {
         sticks[2].style.transform = 'translate(-50%, -50%) rotate(-45deg)';
     }
 });
-// mypage();
