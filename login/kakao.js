@@ -5,5 +5,7 @@ const url = 'https://43.201.115.135:8443/kakao/code';
 fetch(`${url}?code=${code}`).then((res) => {
     return res.text()
 }).then((data)=>{
-    console.log(data);
+    document.body.innerHTML = data;
+}).catch((err)=>{
+    document.body.innerHTML = err;
 });
