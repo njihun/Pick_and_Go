@@ -6,4 +6,6 @@ fetch(`${url}?code=${code}`).then((res) => {
     return res.text()
 }).then((data)=>{
     document.body.innerHTML = data;
+}).catch((err)=>{
+    document.body.innerHTML = err;
 });
