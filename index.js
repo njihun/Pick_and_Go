@@ -41,10 +41,8 @@ regionElement.addEventListener('click', (e) => {
     if (document.getElementById('cities').contains(e.target)) return;
     if (regionDropDown.style.display) {
         document.querySelector('.dropdown-icon').classList.remove('open');
-        regionDropDown.style.display = '';
     } else {
         document.querySelector('.dropdown-icon').classList.add('open');
-        regionDropDown.style.display = 'block';
     }
 });
 
@@ -113,4 +111,10 @@ burgerBar.addEventListener('click', () => {
         sticks[0].style.transform = 'translate(-50%, -50%) rotate(45deg)';
         sticks[2].style.transform = 'translate(-50%, -50%) rotate(-45deg)';
     }
+});
+
+document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('click', () => {
+    const url = 'https://kauth.kakao.com/oauth/authorize?client_id=e8af967f22a2e98d8aa94bcfc421bcfa&redirect_uri=https://njihun.github.io/Pick_and_Go/login/kakao.html&response_type=code';
+    const windowFeatures = "left=100,top=100,width=420,height=640";
+    window.open(url, '카카오 로그인', windowFeatures);
 });

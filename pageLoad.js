@@ -13,6 +13,6 @@ export async function favoriteAttractions() {
     const temp = await fetch('./favoriteAttractions.html');
     temp.text().then((e)=>{
         document.querySelector('.container').innerHTML += e;
-        import("./favoriteAttractions.js");
+        import(`./favoriteAttractions.js?ts=${Date.now()}`);
     });
 }
