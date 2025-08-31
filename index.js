@@ -41,15 +41,16 @@ regionElement.addEventListener('click', (e) => {
     if (document.getElementById('cities').contains(e.target)) return;
     if (regionDropDown.style.display) {
         document.querySelector('.dropdown-icon').classList.remove('open');
+        regionDropDown.style.display = '';
     } else {
         document.querySelector('.dropdown-icon').classList.add('open');
+        regionDropDown.style.display = 'block';
     }
 });
 
 document.querySelectorAll('#cities > .city > .child > .city').forEach((e) => {
     e.addEventListener('click', () => {
         parent = e.parentElement.parentElement.querySelector('span');
-        console.log(e.querySelector('span').dataset.id);
         regionElement.querySelector('span').innerText = (parent.innerText + ' ' + e.innerText);
         
         document.querySelector('.dropdown-icon').classList.remove('open');

@@ -6,7 +6,6 @@ async function getHotplace(criteria = 'total_visited_count') {
         hotplaceList = await fetch(url+criteria);
         hotplaceList = await hotplaceList.json();
     } catch(ignore){}
-    console.log(hotplaceList);
     container.innerHTML = '';
     const div = document.createElement('div');
     const div2 = document.createElement('div');
