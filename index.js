@@ -119,3 +119,14 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
     const windowFeatures = "left=100,top=100,width=420,height=640";
     window.open(url, '카카오 로그인', windowFeatures);
 });
+
+
+window.addEventListener("message", (event) => {
+    // 보안상 origin 체크 필수
+    if (event.origin !== window.location.origin) return;
+
+    const { loginData } = event.data;
+    console.log("카카오 토큰 받음:", loginData);
+
+    // 여기서 token을 가지고 API 요청 or 상태 업데이트
+});

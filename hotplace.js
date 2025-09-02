@@ -35,12 +35,17 @@ async function getHotplace(criteria = 'total_visited_count') {
 await getHotplace();
 
 function resize() {
-    const count = Math.trunc(container.getBoundingClientRect().width/(container.children[1].children[0].getBoundingClientRect().width + 20));
+    const margin = 20;
+    const count = Math.trunc(container.getBoundingClientRect().width/(container.children[1].children[0].getBoundingClientRect().width + margin));
     container.children[1].style.gridTemplateColumns = `repeat(${count}, 1fr)`;
     if (count <= 2) {
         Array.from(container.children[0].children).forEach((e) => {
             e.classList.remove('auto');
         });
+        document.querySelector('#hotplace > .container > div:nth-of-type(1)').style.gridTemplateColumns = '1fr 1fr';
+        if (count <= 1) {
+            document.querySelector('#hotplace > .container > div:nth-of-type(1)').style.gridTemplateColumns = '1fr';
+        }
     } else {
         Array.from(container.children[0].children).forEach((e) => {
             e.classList.add('auto');

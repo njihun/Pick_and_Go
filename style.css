@@ -209,6 +209,7 @@ header {
 
 #recommend {
     position: relative;
+    width: 100vw;
     height: 400px;
     color: #fff;
     text-align: center;
@@ -230,7 +231,7 @@ header {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 30%;
-    filter: blur(5px) brightness(40%);
+    filter: brightness(40%);
 
 }
 
@@ -484,27 +485,31 @@ header {
     border-radius: 7px;
     box-shadow: 0 0 4px 2px #D9D9D9;
     background-color: #fff;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #hotplace > .container .attraction > *:nth-child(1) {
     width: 100%;
     padding-top: 66.7%;
     background-size: cover;
+    display: grid;
 }
 
 #hotplace > .container > div:nth-of-type(1) > .attraction.auto {
+    transition: width 150ms ease;
     width: 80%;
 }
 
 #hotplace > .container > div:nth-of-type(1) > .attraction.auto:hover {
-    transition: width 150ms ease;
     width: 85%;
 }
 
-#hotplace > .container .attraction:hover {
+#hotplace > .container .attraction {
     transition: width 150ms ease;
+}
+
+#hotplace > .container .attraction:hover {
     width: 215px;
 }
 
