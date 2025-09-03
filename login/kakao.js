@@ -6,7 +6,7 @@ fetch(`${url}?code=${code}`).then((res) => {
     return res.text();
 }).then((data)=>{
     window.opener.postMessage({ data }, window.location.origin);
-    window.close();
+    // window.close();
 }).catch((err)=>{
     document.body.innerHTML = err;
 });
