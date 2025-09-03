@@ -125,6 +125,8 @@ window.addEventListener("message", (event) => {
     // 보안상 origin 체크 필수
     if (event.origin !== window.location.origin) return;
     console.log(event);
+    console.log(event.data);
+    console.log(event.data.data);
     
     const { loginData } = event.data;
     console.log("카카오 토큰 받음:", loginData);
