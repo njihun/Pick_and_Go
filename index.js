@@ -124,12 +124,8 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
 window.addEventListener("message", (event) => {
     // 보안상 origin 체크 필수
     if (event.origin !== window.location.origin) return;
-    console.log(event);
-    console.log(event.data);
-    console.log(event.data.data);
-    
-    const { loginData } = event.data;
-    console.log("카카오 토큰 받음:", loginData);
+    const { data } = event.data;
+    console.log("카카오 토큰 받음:", data);
 
     // 여기서 token을 가지고 API 요청 or 상태 업데이트
 });
