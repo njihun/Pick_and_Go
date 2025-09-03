@@ -126,6 +126,4 @@ window.addEventListener("message", (event) => {
     if (event.origin !== window.location.origin) return;
     const { data } = event.data;
     console.log("카카오 토큰 받음:", data);
-
-    // 여기서 token을 가지고 API 요청 or 상태 업데이트
 });
