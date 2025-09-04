@@ -130,6 +130,6 @@ window.addEventListener("message", (event) => {
     
     document.body.style.overflow = 'hidden';
     const userData = document.getElementById('user-data');
-    overlay.style.dispulay = 'block';
+    overlay.style.display = 'block';
     userData.style.display = 'block';
 });
