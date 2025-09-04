@@ -129,7 +129,7 @@ window.addEventListener("message", (event) => {
     close();
     
     document.body.style.overflow = 'hidden';
-    const login = document.getElementById('user-data');
-    overlay.style.display = 'block';
-    login.style.display = 'block';
+    const userData = document.getElementById('user-data');
+    overlay.style.dispulay = 'block';
+    userData.style.display = 'block';
 });
