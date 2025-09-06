@@ -43,6 +43,11 @@ body {
     display: flex;
 }
 
+#user-data > div:nth-of-type(2) > div {
+    display: flex;
+    flex-direction: column;
+}
+
 .close {
     width: 23px;
     height: 23px;
@@ -209,7 +214,7 @@ header {
 
 #recommend {
     position: relative;
-    width: 100vw;
+    width: 100%;
     height: 400px;
     color: #fff;
     text-align: center;
@@ -366,10 +371,12 @@ header {
 
 #recommend>form>div:nth-of-type(2)>*:nth-of-type(1) {
     background-color: #E94E38;
+    border: 1px solid #dd7769;
 }
 
 #recommend>form>div:nth-of-type(2)>*:nth-of-type(2) {
     background-color: #389FE9;
+    border: 1px solid #70b3e3;
 }
 
 .sub-header {
@@ -379,6 +386,7 @@ header {
     display: flex;
     justify-content: center;
     z-index: 1;
+    border-bottom: 2px solid #ddd;
 }
 
 .sub-header>div {
@@ -459,7 +467,7 @@ header {
 }
 
 #hotplace {
-    background-color: #F3F1F2;
+    /* background-color: #fff; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -622,6 +630,10 @@ footer>*:last-child>div>* {
     }
 
     #recommend {
+        height: 320px;
+    }
+
+    #recommend::before { 
         height: 320px;
     }
 

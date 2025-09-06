@@ -133,3 +133,17 @@ window.addEventListener("message", (event) => {
     overlay.style.display = 'block';
     userData.style.display = 'block';
 });
+
+function numberTypeLength(e) {
+    e.value = e.value.slice(0, e.dataset.max);
+}
+window.numberTypeLength = numberTypeLength;
+
+function writeAge(e) {
+    if (e.value.length == e.dataset.max) {
+
+        console.log(e.parentElement);
+    }
+    
+}
+window.writeAge = writeAge;

@@ -127,7 +127,41 @@
     <div id="modal">
         <div id="user-data">
             <div>
-                test
+                <h2>PIGO.kr</h2>
+                <Span>회원님의 정보를 입력해주세요.</Span>
+            </div>
+            <div>
+                <div>
+                    <label for="name">이름</label>
+                    <input type="text" name="name" id="name">
+                </div>
+                <div>
+                    <label for="email">이메일</label>
+                    <div>
+                        <input type="text" name="email" id="email">
+                        <span>@</span>
+                        <select name="domain" id="domain">
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="kakao.com">kakao.com</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="age">나이</label>
+                    <div>
+                        <input type="number" name="year" id="age" placeholder="YYYY" data-max="4" oninput="numberTypeLength(this);" onchange="writeAge(this);">
+                        <input type="number" name="month" id="age" placeholder="MM" data-max="2" oninput="numberTypeLength(this);">
+                        <input type="number" name="date" id="age" placeholder="DD" data-max="2" oninput="numberTypeLength(this);">
+                    </div>
+                </div>
+                <div>
+                    <label for="gender">성별</label>
+                    <select name="gender" id="gender">
+                        <option value="male">남</option>
+                        <option value="female">여</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div id="login">
