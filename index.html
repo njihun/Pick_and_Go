@@ -127,40 +127,46 @@
     <div id="modal">
         <div id="user-data">
             <div>
-                <h2>PIGO.kr</h2>
-                <Span>회원님의 정보를 입력해주세요.</Span>
+                <h1>PIGO.kr</h1>
+                <span>회원님의 정보를 입력해주세요.</span>
             </div>
             <div>
                 <div>
                     <label for="name">이름</label>
-                    <input type="text" name="name" id="name">
+                    <input type="text" name="name" id="name" placeholder="원래 이름" onchange="document.getElementById('email').focus();">
                 </div>
                 <div>
                     <label for="email">이메일</label>
                     <div>
-                        <input type="text" name="email" id="email">
+                        <input type="text" name="email" id="email" placeholder="원래 이메일">
                         <span>@</span>
                         <select name="domain" id="domain">
+                            <option value="select">선택</option>
                             <option value="gmail.com">gmail.com</option>
                             <option value="naver.com">naver.com</option>
                             <option value="kakao.com">kakao.com</option>
+                            <option value="write">직접 입력</option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <label for="age">나이</label>
                     <div>
-                        <input type="number" name="year" id="age" placeholder="YYYY" data-max="4" oninput="numberTypeLength(this);" onchange="writeAge(this);">
-                        <input type="number" name="month" id="age" placeholder="MM" data-max="2" oninput="numberTypeLength(this);">
-                        <input type="number" name="date" id="age" placeholder="DD" data-max="2" oninput="numberTypeLength(this);">
+                        <input type="number" name="year" class="age" id="age" placeholder="YYYY" data-max="4" oninput="numberTypeLength(this);">
+                        <input type="number" name="month" class="age" id="age" placeholder="MM" data-max="2" oninput="numberTypeLength(this);">
+                        <input type="number" name="date" class="age" id="age" placeholder="DD" data-max="2" oninput="numberTypeLength(this);">
                     </div>
                 </div>
                 <div>
                     <label for="gender">성별</label>
                     <select name="gender" id="gender">
+                        <option value="select">선택</option>
                         <option value="male">남</option>
                         <option value="female">여</option>
                     </select>
+                </div>
+                <div>
+                    <button>확인</button>
                 </div>
             </div>
         </div>

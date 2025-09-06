@@ -43,9 +43,75 @@ body {
     display: flex;
 }
 
+#user-data > div:nth-of-type(1) > *:nth-child(1) {
+    margin: 0;
+    color: gray;
+}
+
+#user-data > div:nth-of-type(1) > span {
+    font-size: 22px;
+}
+
 #user-data > div:nth-of-type(2) > div {
     display: flex;
     flex-direction: column;
+}
+
+/* #user-data > div:nth-of-type(2) */
+
+#user-data > div:nth-of-type(2) > div:nth-last-of-type(1) {
+    display: flex;
+    align-items: end;
+    margin-top: 10px;
+}
+
+#user-data > div:nth-of-type(2) > div:nth-last-of-type(1) > button {
+    width: 80px;
+    border-radius: 50px;
+    border: 0;
+    box-shadow: 0px 2px 2px 0px #D9D9D9;
+    background-color: #70B4F4;
+    padding: 3px;
+}
+
+#user-data input, #user-data select {
+    max-width: calc(100% - 20px);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+#user-data input.age {
+    font-family: monospace;
+}
+
+input[name=year] {
+    width: 4ch;
+}
+
+input[name=month] {
+    width: 2ch;
+}
+
+input[name=date] {
+    width: 2ch;
+}
+
+#name {
+    width: 160px;
+}
+
+#email {
+    width: 120px;
+}
+
+#user-data input[type=number]::-webkit-inner-spin-button {
+    appearance: none;
+}
+
+#gender {
+    width: 140px;
 }
 
 .close {
