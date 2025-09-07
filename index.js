@@ -188,7 +188,7 @@ function editUserData() {
         alert('이메일을 입력해 주세요.');
         return
     }
-    const userData = Array.from(document.querySelectorAll('#user-data > form input')).filter((e) => {
+    const userData = Array.from(document.querySelectorAll('#user-data > *:nth-child(2) input')).filter((e) => {
         return e.id != 'email-domain'
     }).map((e) => e.value);
     if (userData.some((e)=>!Boolean(e)) || document.getElementById('gender').value == 'select') {
