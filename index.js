@@ -128,7 +128,7 @@ window.addEventListener("message", (event) => {
     if (event.origin !== window.location.origin) return;
     console.log(event.data.data);
     
-    const data = JSON.parse(event.data.data);
+    const data = event.data.data;
     console.log("카카오 토큰 받음:", data);
     document.getElementById('name').value = data.user.kakao_account.profile.nickname;
     document.getElementById('email').value = data.user.kakao_account.email.split('@')[0];
