@@ -35,7 +35,7 @@ body {
     left: 50%;
     z-index: 5;
     transform: translate(-50%, -50%);
-    padding: 32px;
+    padding: 25px;
     border-radius: 20px;
 }
 
@@ -57,7 +57,9 @@ body {
     flex-direction: column;
 }
 
-/* #user-data > div:nth-of-type(2) */
+#user-data label {
+    margin-top: 15px;
+}
 
 #user-data > div:nth-of-type(2) > div:nth-last-of-type(1) {
     display: flex;
@@ -66,12 +68,12 @@ body {
 }
 
 #user-data > div:nth-of-type(2) > div:nth-last-of-type(1) > button {
-    width: 80px;
+    width: 90px;
     border-radius: 50px;
     border: 0;
     box-shadow: 0px 2px 2px 0px #D9D9D9;
     background-color: #70B4F4;
-    padding: 3px;
+    padding: 7px;
 }
 
 #user-data input, #user-data select {
@@ -104,6 +106,10 @@ input[name=date] {
 
 #email {
     width: 120px;
+}
+
+#email-domain {
+    display: none;
 }
 
 #user-data input[type=number]::-webkit-inner-spin-button {

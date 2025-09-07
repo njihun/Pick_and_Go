@@ -64,7 +64,6 @@ regionElement.addEventListener('focusout', (e) => {
     })) return;
     document.querySelector('.dropdown-icon').classList.remove('open');
     regionDropDown.style.display = '';
-    
 });
 
 function close() {
@@ -74,9 +73,12 @@ function close() {
     overlay.style.display = 'none';
     document.body.style.overflow = '';
 }
+window.close = close;
+
 overlay.addEventListener('click', () => {
     close();
 });
+
 document.querySelectorAll('.close').forEach((e)=> {
     e.addEventListener('click', () => {
         close();
@@ -126,14 +128,26 @@ window.addEventListener("message", (event) => {
     if (event.origin !== window.location.origin) return;
     const { data } = event.data;
     console.log("카카오 토큰 받음:", data);
-    close();
+    document.getElementById('name').value = data.user.kakao_account.profile.nickname;
+    document.getElementById('email').value = data.user.kakao_account.email.split('@')[0];
+    const domain = Array.from(document.getElementById('domain').children).slice(1, document.getElementById('domain').children.length - 1).some((e)=>{
+        return e.value==data.user.kakao_account.email.split('@')[1];
+    });
+    if (domain) {
+        Array.from(document.getElementById('domain').children).slice(1, document.getElementById('domain').children.length - 1).filter((e)=>{
+            return e.value==data.user.kakao_account.email.split('@')[1];
+        })[0].selected = true;
+    } else {
+        document.getElementById('domain').children[document.getElementById('domain').children.length - 1].selected = true;
+        document.getElementById('email-domain').value = data.user.kakao_account.email.split('@')[1];
+    }
     
+    close();
     document.body.style.overflow = 'hidden';
     const userData = document.getElementById('user-data');
     overlay.style.display = 'block';
     userData.style.display = 'block';
 });
-
 
 document.body.style.overflow = 'hidden';
 const userData = document.getElementById('user-data');
@@ -150,3 +164,12 @@ function numberTypeLength(e) {
     }
 }
 window.numberTypeLength = numberTypeLength;
+
+document.getElementById('domain').addEventListener('change', (e) => {
+    if (e.target.value == 'write') {
+        document.getElementById('email-domain').style.display = 'block';
+        document.getElementById('email-domain').focus();
+    } else {
+        document.getElementById('email-domain').style.display = '';
+    }
+});
