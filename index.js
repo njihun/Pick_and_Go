@@ -173,7 +173,7 @@ document.getElementById('domain').addEventListener('change', (e) => {
 
 let editing = false;
 async function editUserData() {
-    if (editing) return;
+    // if (editing) return;
     editing = true;
     let domain = document.querySelector('#domain').value;
     if (domain == 'write') {
