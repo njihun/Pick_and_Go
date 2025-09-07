@@ -123,7 +123,7 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
     window.open(url, '카카오 로그인', windowFeatures);
 });
 
-const data = null;
+let data = null;
 window.addEventListener("message", (event) => {
     // 보안상 origin 체크 필수
     if (event.origin !== window.location.origin) return;
