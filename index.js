@@ -124,11 +124,22 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
 });
 
 let data = null;
-window.addEventListener("message", (event) => {
+window.addEventListener("message", async (event) => {
     // 보안상 origin 체크 필수
     if (event.origin !== window.location.origin) return;
     data = JSON.parse(event.data.data);
     console.log("카카오 토큰 받음:", data);
+    const req = {
+        "method": "GET",
+        "headers":{
+            "Content-Type":"application/json",
+            "Authorization":"Bearer "+data.PIGO_token
+        }
+    }
+    let res = await fetch(url+'/user/getUserInfo', req);
+    res = await res.json();
+    console.log(res);
+    
     document.getElementById('name').value = data.user.kakao_account.profile.nickname;
     document.getElementById('email').value = data.user.kakao_account.email.split('@')[0];
     const domain = Array.from(document.getElementById('domain').children).slice(1, document.getElementById('domain').children.length - 1).some((e)=>{
