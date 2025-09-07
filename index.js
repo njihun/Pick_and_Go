@@ -171,7 +171,7 @@ document.getElementById('domain').addEventListener('change', (e) => {
     }
 });
 
-function editUserData() {
+async function editUserData() {
     let domain = document.querySelector('#domain').value;
     if (domain == 'write') {
         domain = document.getElementById('email-domain').value;
@@ -207,6 +207,7 @@ function editUserData() {
     
     try {
         const req = {
+            "method": "POST",
             "headers": {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer "+data.PIGO_token
@@ -220,7 +221,13 @@ function editUserData() {
         };
         console.log(req);
         
-        // const res = fetch(url + '/user/setUserInfo', req)
+        let res = await fetch(url + '/user/setUserInfo', req);
+        console.log(res);
+        res = await res.text();
+        console.log(res);
+        
+
+        
     } catch (err) {
         console.log(err);
         
