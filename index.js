@@ -150,10 +150,6 @@ window.addEventListener("message", (event) => {
     overlay.style.display = 'block';
     userData.style.display = 'block';
 });
-document.body.style.overflow = 'hidden';
-const userData = document.getElementById('user-data');
-overlay.style.display = 'block';
-userData.style.display = 'block';
 
 function numberTypeLength(e) {
     e.value = e.value.slice(0, e.dataset.max);
@@ -209,19 +205,25 @@ function editUserData() {
         }
     }
     
-    const req = {
-        "headers": {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer "+data.PIGO_token
-        },
-        "body": {
-            "newName": userData[0],
-            "newEmail": `${userData[1]}@${domain}`,
-            "newSex": document.getElementById('gender').value,
-            "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
-        }
-    };
-    console.log(req);
-    
-    // const res = fetch(url + '/user/setUserInfo', req)
+    try {
+        const req = {
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer "+data.PIGO_token
+            },
+            "body": {
+                "newName": userData[0],
+                "newEmail": `${userData[1]}@${domain}`,
+                "newSex": document.getElementById('gender').value,
+                "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
+            }
+        };
+        console.log(req);
+        
+        // const res = fetch(url + '/user/setUserInfo', req)
+    } catch (err) {
+        console.log(err);
+        
+    }
 }
+window.editUserData = editUserData;
