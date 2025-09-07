@@ -171,7 +171,10 @@ document.getElementById('domain').addEventListener('change', (e) => {
     }
 });
 
+let editing = false;
 async function editUserData() {
+    if (editing) return;
+    editing = true;
     let domain = document.querySelector('#domain').value;
     if (domain == 'write') {
         domain = document.getElementById('email-domain').value;
@@ -204,33 +207,25 @@ async function editUserData() {
             return;
         }
     }
-    
-    try {
-        const req = {
-            "method": "POST",
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer "+data.PIGO_token
-            },
-            "body": {
-                "newName": userData[0],
-                "newEmail": `${userData[1]}@${domain}`,
-                "newSex": document.getElementById('gender').value,
-                "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
-            }
-        };
-        console.log(req);
-        
-        let res = await fetch(url + '/user/setUserInfo', req);
-        console.log(res);
-        res = await res.text();
-        console.log(res);
-        
-
-        
-    } catch (err) {
-        console.log(err);
-        
+    const req = {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+data.PIGO_token
+        },
+        "body": {
+            "newName": userData[0],
+            "newEmail": `${userData[1]}@${domain}`,
+            "newSex": document.getElementById('gender').value,
+            "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
+        }
+    };
+    let res = await fetch(url + '/user/setUserInfo', req);
+    if (res.status == 200) {
+        close();
+        editing = false;
     }
+    res = await res.text();
+    console.log(res);
 }
 window.editUserData = editUserData;
