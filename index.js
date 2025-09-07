@@ -218,7 +218,7 @@ async function editUserData() {
             "newEmail": `${userData[1]}@${domain}`,
             "newSex": document.getElementById('gender').value,
             "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
-        });
+        })
     };
     let res = await fetch(url + '/user/setUserInfo', req);
     if (res.status == 200) {
