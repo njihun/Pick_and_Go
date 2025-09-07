@@ -173,7 +173,7 @@ document.getElementById('domain').addEventListener('change', (e) => {
 
 let editing = false;
 async function editUserData() {
-    // if (editing) return;
+    if (editing) return;
     editing = true;
     let domain = document.querySelector('#domain').value;
     if (domain == 'write') {
@@ -213,12 +213,12 @@ async function editUserData() {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+data.PIGO_token
         },
-        "body": {
+        "body": JSON.stringify({
             "newName": userData[0],
             "newEmail": `${userData[1]}@${domain}`,
             "newSex": document.getElementById('gender').value,
             "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
-        }
+        });
     };
     let res = await fetch(url + '/user/setUserInfo', req);
     if (res.status == 200) {
