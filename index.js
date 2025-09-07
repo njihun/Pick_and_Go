@@ -1,6 +1,7 @@
 import { getRegion } from "./parser.js";
 import { mypage, favoriteAttractions } from "./pageLoad.js";
 await import('./hotplace.js');
+const url = 'https://43.201.115.135:8443';
 window.mypage = mypage;
 window.favoriteAttractions = favoriteAttractions;
 const region = await getRegion();
@@ -68,14 +69,14 @@ regionElement.addEventListener('focusout', (e) => {
 
 function close() {
     document.querySelectorAll('#modal > *').forEach((e) => {
-        e.style.display = 'none';
+        e.style.display = '';
     });
-    overlay.style.display = 'none';
+    overlay.style.display = '';
     document.body.style.overflow = '';
 }
-window.close = close;
 
 overlay.addEventListener('click', () => {
+    if (document.getElementById('user-data').style.display) return;
     close();
 });
 
@@ -122,11 +123,11 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
     window.open(url, '카카오 로그인', windowFeatures);
 });
 
-
+const data = null;
 window.addEventListener("message", (event) => {
     // 보안상 origin 체크 필수
     if (event.origin !== window.location.origin) return;
-    const data = JSON.parse(event.data.data);
+    data = JSON.parse(event.data.data);
     console.log("카카오 토큰 받음:", data);
     document.getElementById('name').value = data.user.kakao_account.profile.nickname;
     document.getElementById('email').value = data.user.kakao_account.email.split('@')[0];
@@ -149,6 +150,10 @@ window.addEventListener("message", (event) => {
     overlay.style.display = 'block';
     userData.style.display = 'block';
 });
+document.body.style.overflow = 'hidden';
+const userData = document.getElementById('user-data');
+overlay.style.display = 'block';
+userData.style.display = 'block';
 
 function numberTypeLength(e) {
     e.value = e.value.slice(0, e.dataset.max);
@@ -169,3 +174,54 @@ document.getElementById('domain').addEventListener('change', (e) => {
         document.getElementById('email-domain').style.display = '';
     }
 });
+
+function editUserData() {
+    let domain = document.querySelector('#domain').value;
+    if (domain == 'write') {
+        domain = document.getElementById('email-domain').value;
+        if (!domain) {
+            alert('이메일을 입력해 주세요.');
+            return;
+        }
+    } else if (domain == 'select') {
+        // 선택 안 한 경우
+        alert('이메일을 입력해 주세요.');
+        return
+    }
+    const userData = Array.from(document.querySelectorAll('#user-data > form input')).filter((e) => {
+        return e.id != 'email-domain'
+    }).map((e) => e.value);
+    if (userData.some((e)=>!Boolean(e)) || document.getElementById('gender').value == 'select') {
+        alert('모든 입력란을 채워주세요.');
+        return;
+    }
+    if (userData[2] > new Date().getFullYear() || Number(userData[3]) < 1 || Number(userData[3]) > 12 || userData[4] < 1 || userData[4] > 31) {
+        alert("유효한 날짜를 입력해 주세요.");
+        return;
+    }
+    if (userData[2] == new Date().getFullYear()) {
+        if (userData[3] > new Date().getMonth + 1) {
+            alert("유효한 날짜를 입력해 주세요.");
+            return;
+        } else if (userData[3] == new Date().getMonth + 1 && userData[4] > new Date().getDate()) {
+            alert("유효한 날짜를 입력해 주세요.");
+            return;
+        }
+    }
+    
+    const req = {
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+data.PIGO_token
+        },
+        "body": {
+            "newName": userData[0],
+            "newEmail": `${userData[1]}@${domain}`,
+            "newSex": document.getElementById('gender').value,
+            "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
+        }
+    };
+    console.log(req);
+    
+    // const res = fetch(url + '/user/setUserInfo', req)
+}
