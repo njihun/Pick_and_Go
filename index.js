@@ -149,11 +149,6 @@ window.addEventListener("message", (event) => {
     userData.style.display = 'block';
 });
 
-document.body.style.overflow = 'hidden';
-const userData = document.getElementById('user-data');
-overlay.style.display = 'block';
-userData.style.display = 'block';
-
 function numberTypeLength(e) {
     e.value = e.value.slice(0, e.dataset.max);
     if (e.value.length < e.dataset.max) return;
