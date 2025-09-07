@@ -231,12 +231,12 @@ async function editUserData() {
             "newAge": `${userData[2]}${userData[3]}${userData[4]}`,
         })
     };
-    let res = await fetch(url + '/user/setUserInfo', req);
-    if (res.status == 200) {
-        close();
-        editing = false;
-    }
-    res = await res.text();
-    console.log(res);
+    // let res = await fetch(url + '/user/setUserInfo', req);
+    // if (res.status == 200) {
+    //     close();
+    //     editing = false;
+    // }
+    // res = await res.text();
+    // console.log(res);
 }
 window.editUserData = editUserData;
