@@ -139,6 +139,7 @@ window.addEventListener("message", (event) => {
         })[0].selected = true;
     } else {
         document.getElementById('domain').children[document.getElementById('domain').children.length - 1].selected = true;
+        document.getElementById('email-domain').style.display = 'block';
         document.getElementById('email-domain').value = data.user.kakao_account.email.split('@')[1];
     }
     
