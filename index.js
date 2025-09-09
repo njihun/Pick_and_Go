@@ -123,6 +123,11 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
     window.open(url, '카카오 로그인', windowFeatures);
 });
 
+function login(user) {
+    console.log('로그인 성공: '+user);
+    
+}
+
 let data = null;
 window.addEventListener("message", async (event) => {
     // 보안상 origin 체크 필수
@@ -138,7 +143,11 @@ window.addEventListener("message", async (event) => {
     }
     let res = await fetch(url+'/user/getUserInfo', req);
     res = await res.json();
-    if (res.sex) return;
+    if (res.sex) {
+        login(res);
+        close();
+        return;
+    }
     
     document.getElementById('name').value = data.user.kakao_account.profile.nickname;
     document.getElementById('email').value = data.user.kakao_account.email.split('@')[0];
@@ -233,10 +242,11 @@ async function editUserData() {
     };
     let res = await fetch(url + '/user/setUserInfo', req);
     if (res.status == 200) {
+        res = await fetch(url+'/user/getUserInfo', req);
+        res = await res.json();
+        login(res);
         close();
         editing = false;
     }
-    res = await res.text();
-    console.log(res);
 }
 window.editUserData = editUserData;
