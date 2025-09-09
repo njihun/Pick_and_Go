@@ -19,6 +19,8 @@ async function getHotplace(criteria = 'total_visited_count') {
         title.innerText = i+1+'. '+e.title;
         p.append(title);
         attraction.append(img, p);
+        attraction.dataset.tour_id = hotplaceList[i].tour_id;
+        
         if (i==0 || i==1) {
             div.appendChild(attraction);
             if (i==1) {
