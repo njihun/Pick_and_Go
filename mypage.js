@@ -25,7 +25,12 @@ if (!sessionStorage.getItem('name')) {
             document.getElementById('domain').children[document.getElementById('domain').children.length - 1].selected = true;
             document.getElementById('email-domain').style.display = 'block';
             document.getElementById('email-domain').value = sessionStorage.getItem('email').split('@')[1];
-            document.getElementById('gender').value = sessionStorage.getItem('sex')=='male'?'male':sessionStorage.getItem('sex')=='female'?'female':'select';
+
+            const age = document.querySelectorAll('.age');
+            age[0].value = sessionStorage.getItem('age').slice(0, 4);
+            age[1].value = sessionStorage.getItem('age').slice(4, 6);
+            age[2].value = sessionStorage.getItem('age').slice(6, 8);
+            document.getElementById('gender').children[sessionStorage.getItem('sex')=='male'?1:sessionStorage.getItem('sex')=='female'?2:0].selected = true;
         }
         
         close();
