@@ -86,12 +86,12 @@ document.querySelectorAll('.close').forEach((e)=> {
     });
 });
 
-document.getElementById('log').addEventListener('click', () => {
+document.getElementById('log').onclick = () => {
     document.body.style.overflow = 'hidden';
     const login = document.getElementById('login');
     overlay.style.display = 'block';
     login.style.display = 'block';
-});
+};
 
 burgerBar.addEventListener('click', () => {
     const menuItems = document.querySelector('.menu-bar > :first-child:not(.menu-item)');
@@ -123,9 +123,20 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
     window.open(url, '카카오 로그인', windowFeatures);
 });
 
+let user_data = null;
 function login(user) {
     console.log('로그인 성공: '+user);
-    
+    user_data = user;
+
+    // 로그아웃 처리
+    document.getElementById('log').innerText = 'LogOut';
+    document.getElementById('log').onclick = () => {
+        document.body.style.overflow = 'hidden';
+        const login = document.getElementById('login');
+        overlay.style.display = 'block';
+        login.style.display = 'block';
+    };
+
 }
 
 let data = null;
