@@ -138,7 +138,7 @@ window.addEventListener("message", async (event) => {
     }
     let res = await fetch(url+'/user/getUserInfo', req);
     res = await res.json();
-    console.log(res);
+    if (res.sex) return;
     
     document.getElementById('name').value = data.user.kakao_account.profile.nickname;
     document.getElementById('email').value = data.user.kakao_account.email.split('@')[0];
