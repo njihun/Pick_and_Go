@@ -131,6 +131,8 @@ async function login(user) {
 let data = null;
 window.addEventListener("message", async (event) => {
     // 보안상 origin 체크 필수
+    console.log('메시지 받음');
+    
     if (event.origin !== window.location.origin) return;
     data = JSON.parse(event.data.data);
     console.log("카카오 토큰 받음:", data);
