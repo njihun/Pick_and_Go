@@ -123,10 +123,12 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
     window.open(url, '카카오 로그인', windowFeatures);
 });
 
-let user_data = null;
 function login(user) {
     console.log('로그인 성공: '+user);
-    user_data = user;
+    sessionStorage.setItem('name', user.name);
+    sessionStorage.setItem('email', user.email);
+    sessionStorage.setItem('sex', user.sex);
+    sessionStorage.setItem('age', user.age);
 
     // 로그아웃 처리
     document.getElementById('log').style.backgroundColor = '#FF5151';
@@ -137,7 +139,7 @@ function login(user) {
         overlay.style.display = 'block';
         login.style.display = 'block';
     };
-
+    mypage();
 }
 
 let data = null;
