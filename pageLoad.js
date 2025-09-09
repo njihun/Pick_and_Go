@@ -1,5 +1,5 @@
 export async function mypage() {
-    document.querySelector('.burger-bar').click(); // 열려있는 버거바 닫음
+    if (document.querySelector('.burger-bar > div > div').classList.contains('open')) document.querySelector('.burger-bar').click(); // 열려있는 버거바 닫음
     document.title = 'PIGO - 내 정보';
     const container = document.querySelector('.container');
     container.innerHTML = '';
@@ -12,7 +12,7 @@ export async function mypage() {
 }
 
 export async function favoriteAttractions() {
-    document.querySelector('.burger-bar').click(); // 열려있는 버거바 닫음
+    if (document.querySelector('.burger-bar > div > div').classList.contains('open')) document.querySelector('.burger-bar').click(); // 열려있는 버거바 닫음
     document.title = 'PIGO - 관심 관광지';
     const container = document.querySelector('.container');
     container.innerHTML = '';
