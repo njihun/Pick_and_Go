@@ -210,7 +210,6 @@ document.getElementById('domain').addEventListener('change', (e) => {
 let editing = false;
 async function editUserData() {
     if (editing) return;
-    editing = true;
     let domain = document.querySelector('#domain').value;
     if (domain == 'write') {
         domain = document.getElementById('email-domain').value;
@@ -243,6 +242,7 @@ async function editUserData() {
             return;
         }
     }
+    editing = true;
     const req = {
         "method": "POST",
         "headers": {
@@ -258,7 +258,13 @@ async function editUserData() {
     };
     let res = await fetch(url + '/user/setUserInfo', req);
     if (res.status == 200) {
-        res = await fetch(url+'/user/getUserInfo', req);
+        res = await fetch(url+'/user/getUserInfo', {
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer "+data.PIGO_token
+            }
+        });
         res = await res.json();
         login(res);
         close();
