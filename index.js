@@ -123,7 +123,7 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
     window.open(url, '카카오 로그인', windowFeatures);
 });
 
-async function login(user) {
+function login(user) {
     console.log('로그인 성공: '+user);
     
 }
@@ -246,7 +246,7 @@ async function editUserData() {
     if (res.status == 200) {
         res = await fetch(url+'/user/getUserInfo', req);
         res = await res.json();
-        await login(res);
+        login(res);
         close();
         editing = false;
     }
