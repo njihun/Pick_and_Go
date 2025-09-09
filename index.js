@@ -266,3 +266,19 @@ async function editUserData() {
     }
 }
 window.editUserData = editUserData;
+
+async function getTour(tourList) {
+    let res = await fetch(url+'/tour/getTour', {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": JSON.stringify({
+            "contentidList": tourList
+        })
+    });
+    res = res.json();
+    console.log(res.data);
+    
+}
+window.getTour = getTour;
