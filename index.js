@@ -131,7 +131,7 @@ async function login(user) {
 let data = null;
 window.addEventListener("message", async (event) => {
     // 보안상 origin 체크 필수
-    console.log('메시지 받음');
+    console.log('메시지 받음', event.origin, window.location.origin);
     
     if (event.origin !== window.location.origin) return;
     data = JSON.parse(event.data.data);
