@@ -129,6 +129,7 @@ function login(user) {
     user_data = user;
 
     // 로그아웃 처리
+    document.getElementById('log').style.backgroundColor = '#FF5151';
     document.getElementById('log').innerText = 'LogOut';
     document.getElementById('log').onclick = () => {
         document.body.style.overflow = 'hidden';
