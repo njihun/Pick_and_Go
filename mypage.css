@@ -2,6 +2,7 @@
     border: 1px solid;
     border-radius: 10px;
     padding: 20px;
+    position: relative;
 }
 
 #profile > p:nth-of-type(1) > span {
@@ -43,4 +44,15 @@
 #user > div > div:nth-of-type(1) {
     margin-top: 0;
     margin-right: 20px;
+}
+
+#user-edit {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 25px;
+    height: 25px;
+    background-image: url(./imgs/edit.png);
+    background-size: cover;
+    cursor: pointer;
 }
