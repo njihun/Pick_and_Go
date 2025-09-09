@@ -1,6 +1,14 @@
 import { getRegion } from "./parser.js";
-import { mypage, favoriteAttractions } from "./pageLoad.js";
-await import('./hotplace.js');
+import { mypage, favoriteAttractions, tourData } from "./pageLoad.js";
+
+let tourId = new URL(location.href);
+tourId = tourId.searchParams.get('id');
+if (tourId) {
+    tourData();
+} else {
+    await import('./hotplace.js');
+}
+
 const url = 'https://d0g0h1.world';
 window.mypage = mypage;
 window.favoriteAttractions = favoriteAttractions;
@@ -272,19 +280,3 @@ async function editUserData() {
     }
 }
 window.editUserData = editUserData;
-
-async function getTour(tourList) {
-    let res = await fetch(url+'/tour/getTour', {
-        "method": "POST",
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "body": JSON.stringify({
-            "contentidList": tourList
-        })
-    });
-    res = res.json();
-    console.log(res.data);
-    
-}
-window.getTour = getTour;

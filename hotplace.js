@@ -19,8 +19,11 @@ async function getHotplace(criteria = 'total_visited_count') {
         title.innerText = i+1+'. '+e.title;
         p.append(title);
         attraction.append(img, p);
-        attraction.dataset.tour_id = hotplaceList[i].tour_id;
-        
+        attraction.addEventListener('click', () => {
+            const url = new URL(location.href);
+            url.searchParams.set('id', hotplaceList[i].tour_id);
+            window.open(url.href);
+        });
         if (i==0 || i==1) {
             div.appendChild(attraction);
             if (i==1) {
