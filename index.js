@@ -1,7 +1,7 @@
 import { getRegion } from "./parser.js";
 import { mypage, favoriteAttractions } from "./pageLoad.js";
 await import('./hotplace.js');
-const url = 'https://43.201.115.135:8443';
+const url = 'https://d0g0h1.world';
 window.mypage = mypage;
 window.favoriteAttractions = favoriteAttractions;
 const region = await getRegion();
