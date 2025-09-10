@@ -148,10 +148,10 @@ function setLogout() {
     document.getElementById('log').style.backgroundColor = '#FF5151';
     document.getElementById('log').innerText = 'LogOut';
     document.getElementById('log').onclick = () => {
-        document.body.style.overflow = 'hidden';
-        const login = document.getElementById('login');
-        overlay.style.display = 'block';
-        login.style.display = 'block';
+        Object.keys(sessionStorage).forEach((e) => {
+            sessionStorage.removeItem(e);
+        });
+        location.reload();
     };
 }
 
