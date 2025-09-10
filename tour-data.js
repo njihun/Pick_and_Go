@@ -1,5 +1,6 @@
 const url = 'https://d0g0h1.world';
 
+let interTourList = [];
 let tourId = new URL(location.href);
 tourId = tourId.searchParams.get('id');
 const data = (await getTour([tourId]))[0];
@@ -36,7 +37,7 @@ async function getInterTour() {
     });
     res = await res.json();
     console.log(res)
-    return res.data;
+    return res.tours;
 }
 
 function star() {
@@ -51,4 +52,9 @@ function star() {
 window.star = star;
 
 // 처음 로드될 때 관심 관광지인지 확인할 것
-getInterTour();
+if (getInterTour().indexOf(tourId)!=-1) {
+    console.log(1);
+} else {
+    console.log(2);
+    
+}
