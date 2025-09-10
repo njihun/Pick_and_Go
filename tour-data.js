@@ -50,6 +50,7 @@ async function star() {
         work = "ADD";
     }
     const req = {
+        "method": "POST",
         "headers": {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+jwt
