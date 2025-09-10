@@ -51,4 +51,4 @@ function star() {
 window.star = star;
 
 // 처음 로드될 때 관심 관광지인지 확인할 것
-
+getInterTour();
