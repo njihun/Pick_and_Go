@@ -17,30 +17,32 @@ const regionElement = document.querySelector('#recommend > form > div:nth-of-typ
 const regionDropDown = document.getElementById('cities');
 const overlay = document.getElementById('overlay');
 const burgerBar = document.querySelector('.burger-bar');
-regionDropDown.innerHTML = '';
-region.forEach(e => {
-    const city = document.createElement('div');
-    city.classList.add('city');
-    const name = document.createElement('span');
-    name.classList.add('name');
-    name.innerText = e.name;
-    city.appendChild(name);
-    const children = document.createElement('div');
-    children.classList.add('child');
-    e.child.forEach((e2) => {
-        const city2 = document.createElement('div');
-        city2.classList.add('city');
-        city2.tabIndex = 0;
+if (regionDropDown) {
+    regionDropDown.innerHTML = '';
+    region.forEach(e => {
+        const city = document.createElement('div');
+        city.classList.add('city');
         const name = document.createElement('span');
         name.classList.add('name');
-        name.dataset.id = e2.id
-        name.innerText = e2.name;
-        city2.appendChild(name);
-        children.appendChild(city2);
+        name.innerText = e.name;
+        city.appendChild(name);
+        const children = document.createElement('div');
+        children.classList.add('child');
+        e.child.forEach((e2) => {
+            const city2 = document.createElement('div');
+            city2.classList.add('city');
+            city2.tabIndex = 0;
+            const name = document.createElement('span');
+            name.classList.add('name');
+            name.dataset.id = e2.id
+            name.innerText = e2.name;
+            city2.appendChild(name);
+            children.appendChild(city2);
+        });
+        city.appendChild(children);
+        regionDropDown.appendChild(city);
     });
-    city.appendChild(children);
-    regionDropDown.appendChild(city);
-});
+}
 
 document.querySelectorAll('footer > *:last-child > div > *').forEach((e) => {
     e.style.backgroundImage = `url(./imgs/${e.dataset.social}.png)`;
