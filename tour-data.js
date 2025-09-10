@@ -5,6 +5,7 @@ tourId = tourId.searchParams.get('id');
 const data = (await getTour([tourId]))[0];
 document.getElementById('title').innerText = data.title;
 document.getElementById('addr').innerText = data.addr1;
+document.getElementById('tour-img').src = data.firstimage;
 
 
 async function getTour(tourList) {
