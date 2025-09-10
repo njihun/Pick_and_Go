@@ -21,5 +21,34 @@ async function getTour(tourList) {
     res = await res.json();
     console.log(res)
     return res.data;
-    
 }
+
+async function getInterTour() {
+    const url = 'https://d0g0h1.world';
+    const jwt = sessionStorage.getItem('jwt');
+    if (!jwt) return 'jwt is undefined';
+    let res = await fetch(url+'/tour/getInterTour', {
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+jwt
+        }
+    });
+    res = await res.json();
+    console.log(res)
+    return res.data;
+}
+
+function star() {
+    if (document.getElementById('star').classList.contains('open')) {
+        // 관심 관광지에서 삭제
+        document.getElementById('star').classList.remove('open');
+    } else {
+        document.getElementById('star').classList.add('open');
+
+    }
+}
+window.star = star;
+
+// 처음 로드될 때 관심 관광지인지 확인할 것
+

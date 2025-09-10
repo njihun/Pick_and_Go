@@ -5,7 +5,25 @@
     position: relative;
 }
 
+#title {
+    margin: 0;
+}
+
 #tour-img {
     width: 400px;
     max-width: 100%;
+}
+
+#star {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-image: url(./imgs/star.png);
+    background-size: cover;
+}
+
+#star.open {
+    background-image: url(./imgs/yellow-star.png);
 }
