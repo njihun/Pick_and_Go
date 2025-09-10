@@ -4,3 +4,8 @@
     padding: 20px;
     position: relative;
 }
+
+#tour-img {
+    width: 400px;
+    max-width: 100%;
+}
