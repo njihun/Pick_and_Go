@@ -55,12 +55,12 @@ async function star() {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+jwt
         },
-        "body": {
+        "body": JSON.stringify({
             "attribute": work,
             "contendidList": [
                 tourId
             ]
-        }
+        })
     }
     let res = await fetch(url+'/tour/setInterTour', req);
     res = await res.json();
