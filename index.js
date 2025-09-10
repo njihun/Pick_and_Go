@@ -72,10 +72,6 @@ function setLogout() {
     };
 }
 
-if (sessionStorage.getItem('jwt')) {
-    setLogout();
-}
-
 let data = null;
 window.addEventListener("message", async (event) => {
     // 보안상 origin 체크 필수
@@ -151,6 +147,9 @@ document.getElementById('log').onclick = () => {
     login.style.display = 'block';
 };
 
+if (sessionStorage.getItem('jwt')) {
+    setLogout();
+}
 
 function numberTypeLength(e) {
     e.value = e.value.slice(0, e.dataset.max);
