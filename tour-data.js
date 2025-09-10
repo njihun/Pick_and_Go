@@ -52,7 +52,7 @@ function star() {
 window.star = star;
 
 // 처음 로드될 때 관심 관광지인지 확인할 것
-if (getInterTour().indexOf(tourId)!=-1) {
+if (await getInterTour().indexOf(tourId)!=-1) {
     console.log(1);
 } else {
     console.log(2);
