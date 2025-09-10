@@ -140,6 +140,11 @@ function login(user) {
     sessionStorage.setItem('age', user.age);
 
     // 로그아웃 처리
+    setLogout();
+    mypage();
+}
+
+function setLogout() {
     document.getElementById('log').style.backgroundColor = '#FF5151';
     document.getElementById('log').innerText = 'LogOut';
     document.getElementById('log').onclick = () => {
@@ -148,7 +153,10 @@ function login(user) {
         overlay.style.display = 'block';
         login.style.display = 'block';
     };
-    mypage();
+}
+
+if (sessionStorage.getItem('jwt')) {
+    setLogout();
 }
 
 let data = null;
