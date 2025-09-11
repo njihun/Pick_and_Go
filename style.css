@@ -414,7 +414,6 @@ header {
 
 #cities>.city>.child {
     display: none;
-    padding: 20px;
 }
 
 #cities>.city:hover>.child {
