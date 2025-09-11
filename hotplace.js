@@ -22,7 +22,7 @@ async function getHotplace(criteria = 'total_visited_count') {
         attraction.addEventListener('click', () => {
             const url = new URL(location.href);
             url.searchParams.set('id', hotplaceList[i].tour_id);
-            window.open(url.href);
+            location.href = url.href;
         });
         if (i==0 || i==1) {
             div.appendChild(attraction);
