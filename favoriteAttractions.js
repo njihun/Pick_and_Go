@@ -30,13 +30,6 @@ async function getTour(tourList) {
 
 const filter = await getFilterList();
 const list = document.querySelector('.sub-header .menu-bar>.menu-item .list');
-try {
-    const tourList = await getTour(await getInterTour());
-    console.log(tourList);
-    
-
-} catch(ignore) {};
-
 
 document.querySelector('.sub-header .menu-bar>.menu-item:first-child').addEventListener('click', (e) => {
     if (document.querySelector('.sub-header .menu-bar>.menu-item .list').contains(e.target)) return;
@@ -94,3 +87,23 @@ document.querySelector('.sub-header .menu-bar>.menu-item .list > :last-child > d
     });
     document.querySelector('.sub-header .menu-bar>.menu-item .list').style.display = '';
 });
+
+if (!sessionStorage.getItem('name')) {
+    const notice = document.getElementById('notice');
+    notice.style.display = 'block';
+    overlay.style.display = 'block';
+    notice.onclick = () => {
+        notice.style.display = '';
+        document.body.style.overflow = 'hidden';
+        const login = document.getElementById('login');
+        login.style.display = 'block';
+    };
+} else {
+    try {
+        const tourList = await getTour(await getInterTour());
+        console.log(tourList);
+    } catch(err) {
+        console.log(err);
+        
+    };
+}
