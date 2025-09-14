@@ -1,7 +1,7 @@
 import { getFilterList } from "./parser.js";
+const url = 'https://d0g0h1.world';
 const jwt = sessionStorage.getItem('jwt');
 async function getInterTour() {
-    const url = 'https://d0g0h1.world';
     if (!jwt) return 'jwt is undefined';
     let res = await fetch(url+'/tour/getInterTour', {
         "method": "GET",
