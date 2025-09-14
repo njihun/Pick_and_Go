@@ -41,29 +41,42 @@ async function getInterTour() {
 
 async function star() {
     let work;
-    if (document.getElementById('star').classList.contains('open')) {
-        document.getElementById('star').classList.remove('open');
-        work = "DELETE";
+    
+    if (!sessionStorage.getItem('jwt')) {
+        const notice = document.getElementById('notice');
+        notice.style.display = 'block';
+        overlay.style.display = 'block';
+        notice.onclick = () => {
+            notice.style.display = '';
+            document.body.style.overflow = 'hidden';
+            const login = document.getElementById('login');
+            login.style.display = 'block';
+        };
     } else {
-        document.getElementById('star').classList.add('open');
-        work = "ADD";
+        if (document.getElementById('star').classList.contains('open')) {
+            document.getElementById('star').classList.remove('open');
+            work = "DELETE";
+        } else {
+            document.getElementById('star').classList.add('open');
+            work = "ADD";
+        }
+        const req = {
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer "+jwt
+            },
+            "body": JSON.stringify({
+                "attribute": work,
+                "contendidList": [
+                    tourId
+                ]
+            })
+        }
+        let res = await fetch(url+'/tour/setInterTour', req);
+        res = await res.json();
+        console.log(res.message);
     }
-    const req = {
-        "method": "POST",
-        "headers": {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer "+jwt
-        },
-        "body": JSON.stringify({
-            "attribute": work,
-            "contendidList": [
-                tourId
-            ]
-        })
-    }
-    let res = await fetch(url+'/tour/setInterTour', req);
-    res = await res.json();
-    console.log(res.message);
 }
 window.star = star;
 
