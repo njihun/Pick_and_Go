@@ -50,8 +50,8 @@
     position: absolute;
     top: 100%;
     left: 0;
-    width: 750px;
-    max-width: calc(100vw - 40px);
+    width: 600px;
+    max-width: calc(100vw - 60px);
     z-index: 5;
     border-radius: 18px;
     padding: 10px;
@@ -111,6 +111,10 @@
     color: #fff;
 }
 
+.sub-header > div:nth-of-type(2) {
+    margin-bottom: 10px;
+}
+
 .sub-header .count {
     height: min-content;
     white-space: nowrap;
@@ -145,6 +149,7 @@
     padding: 10px;
     border-radius: 8px;
     margin-left: 15px;
+    background-color: #fff;
 }
 
 

@@ -35,8 +35,8 @@ export async function getFilterList() {
     return filterList.map((e) => {
         const temp = e.split(',');
         return {
-            'Cd': temp[0],
-            'Nm': temp[1]
+            'Cd': temp[0].trim(),
+            'Nm': temp[1].trim()
         };
     });
     

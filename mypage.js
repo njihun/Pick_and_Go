@@ -1,8 +1,13 @@
 if (!sessionStorage.getItem('name')) {
-    document.body.style.overflow = 'hidden';
-    const login = document.getElementById('login');
+    const notice = document.getElementById('notice');
+    notice.style.display = 'block';
     overlay.style.display = 'block';
-    login.style.display = 'block';
+    notice.onclick = () => {
+        notice.style.display = '';
+        document.body.style.overflow = 'hidden';
+        const login = document.getElementById('login');
+        login.style.display = 'block';
+    };
 } else {
     document.querySelector('#profile > p > span').innerText = sessionStorage.getItem('name');
     let user = document.querySelectorAll('#user > div:nth-of-type(2) > div');

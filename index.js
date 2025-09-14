@@ -6,7 +6,9 @@ tourId = tourId.searchParams.get('id');
 if (tourId) {
     tourData();
 } else {
-    await import('./hotplace.js');
+    try {
+        await import('./hotplace.js');
+    } catch(ignore) {}
 }
 
 const url = 'https://d0g0h1.world';
@@ -131,6 +133,7 @@ function close() {
 
 overlay.addEventListener('click', () => {
     if (document.getElementById('user-data').style.display) return;
+    if (document.getElementById('notice').style.display) return;
     close();
 });
 

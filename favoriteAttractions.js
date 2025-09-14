@@ -1,6 +1,42 @@
 import { getFilterList } from "./parser.js";
+async function getInterTour() {
+    const url = 'https://d0g0h1.world';
+    if (!jwt) return 'jwt is undefined';
+    let res = await fetch(url+'/tour/getInterTour', {
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+jwt
+        }
+    });
+    res = await res.json();
+    return res.tours;
+}
+
+async function getTour(tourList) {
+    let res = await fetch(url+'/tour/getTour', {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": JSON.stringify({
+            "contentidList": tourList
+        })
+    });
+    res = await res.json();
+    console.log(res)
+    return res.data;
+}
+
 const filter = await getFilterList();
 const list = document.querySelector('.sub-header .menu-bar>.menu-item .list');
+try {
+    const tourList = await getTour(await getInterTour());
+    console.log(tourList);
+    
+
+} catch(ignore) {};
+
 
 document.querySelector('.sub-header .menu-bar>.menu-item:first-child').addEventListener('click', (e) => {
     if (document.querySelector('.sub-header .menu-bar>.menu-item .list').contains(e.target)) return;
@@ -8,7 +44,7 @@ document.querySelector('.sub-header .menu-bar>.menu-item:first-child').addEventL
         list.style.display = '';
     } else {
         list.style.display = 'block';
-        const select = Array.from(document.querySelectorAll('.sub-header > .menu-bar > .menu-item:not(:first-child)')).map((e) => e.innerText);
+        const select = Array.from(document.querySelectorAll('.sub-header > .menu-bar > .menu-item:not(:first-child)')).map((e) => e.innerText.trim());
         list.children[1].innerHTML = '';
         filter.forEach((e) => {
             const div = document.createElement('div');

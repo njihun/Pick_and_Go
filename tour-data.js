@@ -36,7 +36,6 @@ async function getInterTour() {
         }
     });
     res = await res.json();
-    console.log(res)
     return res.tours;
 }
 
