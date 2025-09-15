@@ -15,7 +15,7 @@ const url = 'https://d0g0h1.world';
 window.mypage = mypage;
 window.favoriteAttractions = favoriteAttractions;
 const region = await getRegion();
-const regionElement = document.querySelector('#recommend > form > div:nth-of-type(1) > div:nth-of-type(1)');
+const regionElement = document.querySelector('#recommend > *:nth-child(2) > div:nth-of-type(1) > div:nth-of-type(1)');
 const regionDropDown = document.getElementById('cities');
 const overlay = document.getElementById('overlay');
 const burgerBar = document.querySelector('.burger-bar');
@@ -239,6 +239,20 @@ async function editUserData() {
     }
 }
 window.editUserData = editUserData;
+
+async function randomTour() {
+    const req = {
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json",
+        }
+    }
+    const res = await fetch(url+"/recommend/getRandomTour", req);
+    const data = await res.json();
+    console.log(data);
+    
+}
+window.randomTour = randomTour;
 
 if (regionDropDown) {
     regionDropDown.innerHTML = '';

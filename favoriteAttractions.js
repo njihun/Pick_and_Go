@@ -100,6 +100,7 @@ if (!sessionStorage.getItem('name')) {
         login.style.display = 'block';
     };
 } else {
+
     try {
         const tourList = await getTour(await getInterTour());
         console.log(tourList);
