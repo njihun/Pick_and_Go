@@ -102,7 +102,7 @@ if (!sessionStorage.getItem('name')) {
 } else {
 
     try {
-        const tourList = await getTour(await getInterTour());
+        const tourList = await getTour((await getInterTour()).map((e)=>e["tour_id"]));
         console.log(tourList);
     } catch(err) {
         console.log(err);
