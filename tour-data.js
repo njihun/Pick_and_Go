@@ -81,6 +81,7 @@ async function star() {
 window.star = star;
 
 // 처음 로드될 때 관심 관광지인지 확인할 것
-if ((await getInterTour().map((e) => e["tour_id"])).indexOf(tourId)!=-1) {
+
+if ((await getInterTour()).some((e)=>e["tour_id"] == tourId)) {
     document.getElementById('star').classList.add('open');
 }
