@@ -44,6 +44,7 @@ Array.from(select).forEach((e, i) => {
                     location.reload();
                 };
             } else {
+                console.log(interTour);
                 let req = {
                     "method": "POST",
                     "headers": {
