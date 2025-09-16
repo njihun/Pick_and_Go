@@ -240,7 +240,6 @@ async function editUserData() {
 }
 window.editUserData = editUserData;
 
-        randomTourRecommned();
 async function randomTour() {
     if (sessionStorage.getItem('jwt')) {
         randomTourRecommned();

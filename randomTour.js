@@ -63,7 +63,7 @@ Array.from(select).forEach((e, i) => {
                     "method": "POST",
                     "headers": {
                         "Content-Type":"application/json",
-                        "Authorization":"Bearer {YourToken}"
+                        "Authorization":"Bearer "+sessionStorage.getItem('jwt')
                     }
                 }
                 res = await fetch(url+'/recommend/getRecommendTour', req);
