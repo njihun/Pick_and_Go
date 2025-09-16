@@ -1,5 +1,5 @@
 import { getRegion } from "./parser.js";
-import { mypage, favoriteAttractions, tourData } from "./pageLoad.js";
+import { mypage, favoriteAttractions, tourData, randomTourRecommned } from "./pageLoad.js";
 
 let tourId = new URL(location.href);
 tourId = tourId.searchParams.get('id');
@@ -240,17 +240,21 @@ async function editUserData() {
 }
 window.editUserData = editUserData;
 
+        randomTourRecommned();
 async function randomTour() {
-    const req = {
-        "method": "GET",
-        "headers": {
-            "Content-Type": "application/json",
-        }
+    if (sessionStorage.getItem('jwt')) {
+        randomTourRecommned();
+    } else {
+        const notice = document.getElementById('notice');
+        notice.style.display = 'block';
+        overlay.style.display = 'block';
+        notice.onclick = () => {
+            notice.style.display = '';
+            document.body.style.overflow = 'hidden';
+            const login = document.getElementById('login');
+            login.style.display = 'block';
+        };
     }
-    const res = await fetch(url+"/recommend/getRandomTour", req);
-    const data = await res.json();
-    console.log(data);
-    
 }
 window.randomTour = randomTour;
 

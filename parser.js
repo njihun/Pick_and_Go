@@ -8,18 +8,18 @@ export async function getRegion() {
     childCities = childCities.map((e) => {
         const city = e.split(',');
         const result = {
-            name: city[1],
-            id: city[0],
-            parentId: city[2]
+            name: city[1].trim(),
+            id: city[0].trim(),
+            parentId: city[2].trim()
         }
         return result;
     });
     parentCities = parentCities.map((e) => {
         const parentCity = e.split(',');
-        const id = parentCity[0];
-        const child = childCities.filter((e2) => id == e2.parentId);
+        const id = parentCity[0].trim();
+        const child = childCities.filter((e2) => id == e2.parentId.trim());
         const result = {
-            name: parentCity[1],
+            name: parentCity[1].trim(),
             id: id,
             child: child
         }
