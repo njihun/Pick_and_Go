@@ -38,13 +38,29 @@
                 <div tabindex="0">
                     <span>장소</span>
                     <div class="dropdown-icon"></div>
-                    <div id="cities"></div>
+                    <div id="cities">
+                        <div>
+                            <div>
+                                <div>시 / 도</div>
+                            </div>
+                            <div>
+                                <div class="city">부산광역시</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <div>시 / 군 / 구</div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <input type="number" placeholder="인원">
             </div>
             <div>
                 <button onclick="window.randomTour();">내 취향 알아보기</button>
-                <button>관광지 추천받기</button>
+                <button onclick="window.recommendTour();">관광지 추천받기</button>
             </div>
         </div>
     </div>
@@ -92,7 +108,7 @@
                 <div class="attraction">
                     <div></div>
                     <p>
-                        <h3>n. 해물왕창칼국수</h3>
+                    <h3>n. 해물왕창칼국수</h3>
                     </p>
                 </div>
             </div>
@@ -127,7 +143,7 @@
     <div id="modal">
         <div id="notice">
             <h2>PIGO.kr</h2>
-            <p>해당 기능은 로그인 후 이용 가능합니다!</p>
+            <p>알림</p>
             <div>
                 <div>확인</div>
             </div>
@@ -140,7 +156,8 @@
             <div>
                 <div>
                     <label for="name">이름</label>
-                    <input type="text" name="name" id="name" placeholder="원래 이름" onchange="document.getElementById('email').focus();">
+                    <input type="text" name="name" id="name" placeholder="원래 이름"
+                        onchange="document.getElementById('email').focus();">
                 </div>
                 <div>
                     <label for="email">이메일</label>
@@ -160,9 +177,12 @@
                 <div>
                     <label for="age">나이</label>
                     <div>
-                        <input type="number" name="year" class="age" id="age" placeholder="YYYY" data-max="4" oninput="numberTypeLength(this);">
-                        <input type="number" name="month" class="age" id="age" placeholder="MM" data-max="2" oninput="numberTypeLength(this);">
-                        <input type="number" name="date" class="age" id="age" placeholder="DD" data-max="2" oninput="numberTypeLength(this);">
+                        <input type="number" name="year" class="age" id="age" placeholder="YYYY" data-max="4"
+                            oninput="numberTypeLength(this);">
+                        <input type="number" name="month" class="age" id="age" placeholder="MM" data-max="2"
+                            oninput="numberTypeLength(this);">
+                        <input type="number" name="date" class="age" id="age" placeholder="DD" data-max="2"
+                            oninput="numberTypeLength(this);">
                     </div>
                 </div>
                 <div>
@@ -179,7 +199,7 @@
             </div>
         </div>
         <div id="login">
-        
+
             <div>
                 <div class="logo">
                     <div></div>

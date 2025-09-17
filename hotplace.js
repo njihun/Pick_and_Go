@@ -21,6 +21,7 @@ async function getHotplace(criteria = 'total_visited_count') {
         attraction.append(img, p);
         attraction.addEventListener('click', () => {
             const url = new URL(location.href);
+            url.searchParams.set('type', 'tour-data');
             url.searchParams.set('id', hotplaceList[i].tour_id);
             location.href = url.href;
         });

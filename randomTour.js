@@ -1,3 +1,4 @@
+import { tourLocation } from "./index.js";
 const url = 'https://d0g0h1.world';
 const req = {
     "method": "GET",
@@ -40,11 +41,14 @@ Array.from(select).forEach((e, i) => {
                 const notice = document.getElementById('notice');
                 notice.style.display = 'block';
                 overlay.style.display = 'block';
-                notice.onclick = () => {
-                    location.reload();
+                notice.children[1].innerText = '해당 기능은 로그인 후 이용 가능합니다!';
+                document.querySelector('#notice > *:last-child > div').onclick = () => {
+                    notice.style.display = '';
+                    document.body.style.overflow = 'hidden';
+                    const login = document.getElementById('login');
+                    login.style.display = 'block';
                 };
             } else {
-                console.log(interTour);
                 let req = {
                     "method": "POST",
                     "headers": {
@@ -65,7 +69,10 @@ Array.from(select).forEach((e, i) => {
                     "headers": {
                         "Content-Type":"application/json",
                         "Authorization":"Bearer "+sessionStorage.getItem('jwt')
-                    }
+                    },
+                    "body": JSON.stringify({
+                        "location": tourLocation
+                    })
                 }
                 res = await fetch(url+'/recommend/getRecommendTour', req);
                 res = await res.json();

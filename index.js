@@ -19,6 +19,7 @@ const regionElement = document.querySelector('#recommend > *:nth-child(2) > div:
 const regionDropDown = document.getElementById('cities');
 const overlay = document.getElementById('overlay');
 const burgerBar = document.querySelector('.burger-bar');
+export let tourLocation = [];
 
 burgerBar.addEventListener('click', () => {
     const menuItems = document.querySelector('.menu-bar > :first-child:not(.menu-item)');
@@ -240,75 +241,150 @@ async function editUserData() {
 }
 window.editUserData = editUserData;
 
-async function randomTour() {
-    if (sessionStorage.getItem('jwt')) {
-        randomTourRecommned();
+function randomTour() {
+    if (tourLocation.length > 0) {
+        if (sessionStorage.getItem('jwt')) {
+            randomTourRecommned();
+        } else {
+            const notice = document.getElementById('notice');
+            notice.style.display = 'block';
+            overlay.style.display = 'block';
+            notice.children[1].innerText = '해당 기능은 로그인 후 이용 가능합니다!';
+            document.querySelector('#notice > *:last-child > div').onclick = () => {
+                notice.style.display = '';
+                document.body.style.overflow = 'hidden';
+                const login = document.getElementById('login');
+                login.style.display = 'block';
+            };
+        }
     } else {
         const notice = document.getElementById('notice');
         notice.style.display = 'block';
         overlay.style.display = 'block';
-        notice.onclick = () => {
+        notice.children[1].innerText = '장소 선택은 필수입니다!';
+        document.querySelector('#notice > *:last-child > div').onclick = () => {
             notice.style.display = '';
-            document.body.style.overflow = 'hidden';
-            const login = document.getElementById('login');
-            login.style.display = 'block';
+            overlay.style.display = '';
         };
     }
+        //여기서 장소가 존재하는지 확인하고 넘기셈
 }
 window.randomTour = randomTour;
 
+function recommendTour(params) {
+    const personnel = document.querySelector("#recommend > div > div:nth-child(1) > input[type=number]").value;
+    if (tourLocation.length == 0) {
+        const notice = document.getElementById('notice');
+        notice.style.display = 'block';
+        overlay.style.display = 'block';
+        notice.children[1].innerText = '장소 선택은 필수입니다!';
+        document.querySelector('#notice > *:last-child > div').onclick = () => {
+            notice.style.display = '';
+            overlay.style.display = '';
+        };
+    } else if (!Boolean(personnel)) {
+        const notice = document.getElementById('notice');
+        notice.style.display = 'block';
+        overlay.style.display = 'block';
+        notice.children[1].innerText = '인원 선택은 필수입니다!';
+        document.querySelector('#notice > *:last-child > div').onclick = () => {
+            notice.style.display = '';
+            overlay.style.display = '';
+        };
+    } else {
+        if (sessionStorage.getItem('jwt')) {
+            // 추천 관광지 보여주는 페이지로 전환
+        } else {
+            const notice = document.getElementById('notice');
+            notice.style.display = 'block';
+            overlay.style.display = 'block';
+            notice.children[1].innerText = '해당 기능은 로그인 후 이용 가능합니다!';
+            document.querySelector('#notice > *:last-child > div').onclick = () => {
+                notice.style.display = '';
+                document.body.style.overflow = 'hidden';
+                const login = document.getElementById('login');
+                login.style.display = 'block';
+            };
+        }
+    }
+    // 장소 입력 + 인원 입력 확인
+
+}
+window.recommendTour = recommendTour;
+
 if (regionDropDown) {
-    regionDropDown.innerHTML = '';
-    region.forEach(e => {
+    document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2)').innerHTML = '';
+    region.forEach((e, i) => {
         const city = document.createElement('div');
         city.classList.add('city');
-        const name = document.createElement('span');
-        name.classList.add('name');
-        name.innerText = e.name;
-        city.appendChild(name);
-        const children = document.createElement('div');
-        children.classList.add('child');
-        e.child.forEach((e2) => {
-            const city2 = document.createElement('div');
-            city2.classList.add('city');
-            city2.tabIndex = 0;
-            const name = document.createElement('span');
-            name.classList.add('name');
-            name.dataset.id = e2.id
-            name.innerText = e2.name;
-            city2.appendChild(name);
-            children.appendChild(city2);
+        city.dataset.id = e.id;
+        city.innerText = e.name;
+        city.addEventListener('click', () => {
+            Array.from(document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2)').children).forEach((e2) => {
+                e2.style.backgroundColor = '';
+            });
+            city.style.backgroundColor = '#B4D5FF';
+            const allSelect = document.createElement('div');
+            allSelect.innerText = '전체 선택';
+            allSelect.addEventListener('click', () => {
+                if (Array.from(document.querySelectorAll('#cities > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).some((e3) => Boolean(e3.style.backgroundColor==''))) {
+                    Array.from(document.querySelectorAll('#cities > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).forEach((e2) => {
+                        const city2 = e.child.filter((e3)=>e3.id == e2.dataset.id)[0];
+                        const locationData = e.name + ' ' + city2.name;
+                        if (tourLocation.indexOf(locationData)==-1) {
+                            e2.click();
+                        }
+                    });
+                } else {
+                    Array.from(document.querySelectorAll('#cities > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).forEach((e2) => {
+                        const city2 = e.child.filter((e3)=>e3.id == e2.dataset.id)[0];
+                        const locationData = e.name + ' ' + city2.name;
+                        if (tourLocation.indexOf(locationData)!=-1) {
+                            e2.click();
+                        }
+                    });
+                }
+            });
+            document.querySelector('#cities > div:nth-of-type(2) > div:nth-of-type(2)').innerHTML = '';
+            document.querySelector('#cities > div:nth-of-type(2) > div:nth-of-type(2)').appendChild(allSelect);
+            e.child.forEach((e2) => {
+                const city2 = document.createElement('div');
+                city2.classList.add('city');
+                city2.dataset.id = e2.id;
+                city2.innerText = e2.name;
+                const locationData = e.name + ' ' + e2.name;
+                if (tourLocation.indexOf(locationData)!=-1) {
+                    city2.style.backgroundColor = '#B4D5FF';
+                }
+                city2.addEventListener('click', () => {
+                    if (tourLocation.indexOf(locationData)==-1) {
+                        tourLocation.push(locationData);
+                        city2.style.backgroundColor = '#B4D5FF';
+                    } else {
+                        tourLocation.splice(tourLocation.indexOf(locationData), 1);
+                    city2.style.backgroundColor = '';
+                    }
+                });
+                document.querySelector('#cities > div:nth-of-type(2) > div:nth-of-type(2)').appendChild(city2);
+            });
         });
-        city.appendChild(children);
-        regionDropDown.appendChild(city);
+        document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2)').appendChild(city);
+        if (i==0) city.click();
     });
     
     regionElement.addEventListener('click', (e) => {
         if (document.getElementById('cities').contains(e.target)) return;
-        if (regionDropDown.style.display) {
+        if (regionDropDown.classList.contains('open')) {
             document.querySelector('.dropdown-icon').classList.remove('open');
-            regionDropDown.style.display = '';
+            regionDropDown.classList.remove('open');
         } else {
             document.querySelector('.dropdown-icon').classList.add('open');
-            regionDropDown.style.display = 'block';
+            regionDropDown.classList.add('open');
         }
     });
     
-    document.querySelectorAll('#cities > .city > .child > .city').forEach((e) => {
-        e.addEventListener('click', () => {
-            parent = e.parentElement.parentElement.querySelector('span');
-            regionElement.querySelector('span').innerText = (parent.innerText + ' ' + e.innerText);
-            
-            document.querySelector('.dropdown-icon').classList.remove('open');
-            regionDropDown.style.display = '';
-        });
-    });
-    
     regionElement.addEventListener('focusout', (e) => {
-        if (Array.from(document.querySelectorAll('#cities > .city > .child')).some((e2)=>{
-            return e2.contains(e.relatedTarget)
-        })) return;
         document.querySelector('.dropdown-icon').classList.remove('open');
-        regionDropDown.style.display = '';
+        regionDropDown.classList.remove('open');
     });
 }
