@@ -64,6 +64,11 @@ document.querySelector('.sub-header .menu-bar>.menu-item:first-child').addEventL
     
 });
 
+const container = document.getElementById('container');
+function recount() {
+    document.querySelector('.count').innerText = Array.from(container.children).filter((e)=>!e.style.display).length+"개의 결과";
+}
+
 document.querySelector('.sub-header .menu-bar>.menu-item .list > :last-child > div:nth-of-type(1)').addEventListener('click', () => {
     document.querySelector('.sub-header .menu-bar>.menu-item .list').style.display = '';
 });
@@ -79,8 +84,8 @@ document.querySelector('.sub-header .menu-bar>.menu-item .list > :last-child > d
         const close = document.createElement('div');
         close.classList.add('close');
         close.addEventListener('click', () => {
-            const select = Array.from(list.children[1].children).filter((e) => e.style.backgroundColor);
-            if (select.length == 1) {
+            div.remove();
+            if (menuBar.children.length == 1) {
                 Array.from(document.querySelectorAll('.tour')).forEach((e) => {
                     e.style.display = '';
                 });
@@ -89,7 +94,7 @@ document.querySelector('.sub-header .menu-bar>.menu-item .list > :last-child > d
                     e2.style.display = 'none';
                 });
             }
-            div.remove();
+            recount();
         });
         div.append(span, close);
         menuBar.appendChild(div);
@@ -108,6 +113,7 @@ document.querySelector('.sub-header .menu-bar>.menu-item .list > :last-child > d
             });
         }
     });
+    recount();
 });
 
 if (!jwt) {
@@ -126,10 +132,6 @@ if (!jwt) {
     try {
         const tourList = await getTour((await getInterTour()).map((e)=>e["tour_id"]));
         console.log(tourList);
-        const container = document.getElementById('container');
-        function recount() {
-            document.querySelector('.count').innerText = container.children.length+"개의 결과";
-        }
         const filterList = await getFilterList();
         container.innerHTML = '';
         tourList.forEach((e, i) => {
@@ -146,6 +148,7 @@ if (!jwt) {
             const tourName = document.createElement('div');
             tourName.innerText = e.title;
             tourName.style.cursor = 'pointer';
+            tourName.style.fontSize = '20px';
             tourName.addEventListener('click', () => {
                 const url = new URL(location.href);
                 url.searchParams.set('type', 'tour-data');
@@ -192,10 +195,10 @@ if (!jwt) {
             div.append(img, data);
 
             container.appendChild(div);
-            recount();
             // 관광지 이름 라인에 삭제하기 버튼 포함해서 2개
-
-        })
+            
+        });
+        recount();
 
         document.getElementById('criteria').addEventListener('change', () => {
             const criteria = document.getElementById('criteria').value;
