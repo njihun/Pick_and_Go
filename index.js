@@ -61,7 +61,7 @@ function login(user) {
 
     // 로그아웃 처리
     setLogout();
-    mypage();
+    location.href = location.origin;
 }
 
 function setLogout() {
