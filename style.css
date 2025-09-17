@@ -181,19 +181,9 @@ input[name=date] {
 }
 
 #login .social>div {
-    display: flex;
     font-size: 20px;
     white-space: nowrap;
-    width: 100%;
     margin-top: 30px;
-}
-
-#login .social>div:nth-child(1)> :nth-child(1) {
-    margin-right: 10px;
-}
-
-#login .social>div:nth-child(2) {
-    margin-top: 10px;
 }
 
 #login .social>div>div {
@@ -202,7 +192,6 @@ input[name=date] {
     border: 1px solid;
     border-radius: 10px;
     padding: 10px;
-    flex-grow: 1;
     cursor: pointer;
 }
 
@@ -212,23 +201,6 @@ input[name=date] {
     width: 30px;
     height: 30px;
     margin-right: 10px;
-}
-
-.google-logo {
-    background-image: url(./imgs/google.webp);
-    background-size: 30px 30px;
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-}
-
-.apple-logo {
-    background-image: url(./imgs/apple.png);
-    background-size: 30px 30px;
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-    filter: invert(100%);
 }
 
 header {
