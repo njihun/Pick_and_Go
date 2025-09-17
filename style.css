@@ -222,16 +222,19 @@ header {
     display: flex;
     justify-content: center;
     line-height: var(--header-height);
+    color: #534CE3;
+    font-weight: bold;
+    font-size: 22px;
 }
 
-.logo>div:nth-of-type(1) {
+/* .logo>div:nth-of-type(1) {
     width: var(--header-height);
     height: var(--header-height);
     background-image: url(./imgs/icon.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: var(--header-height) var(--header-height);
-}
+} */
 
 .burger-bar {
     display: none;
@@ -485,6 +488,8 @@ header {
 }
 
 .sub-header .logo {
+    font-size: 18px;
+    color: #E94E38;
     width: min-content;
     white-space: nowrap;
     line-height: var(--header-height);
