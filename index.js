@@ -61,7 +61,7 @@ function login(user) {
 
     // 로그아웃 처리
     setLogout();
-    location.href = location.origin;
+    location.href = location.origin + location.pathname;
 }
 
 function setLogout() {
@@ -313,22 +313,22 @@ function recommendTour(params) {
 window.recommendTour = recommendTour;
 
 if (regionDropDown) {
-    document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2)').innerHTML = '';
+    document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)').innerHTML = '';
     region.forEach((e, i) => {
         const city = document.createElement('div');
         city.classList.add('city');
         city.dataset.id = e.id;
         city.innerText = e.name;
         city.addEventListener('click', () => {
-            Array.from(document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2)').children).forEach((e2) => {
+            Array.from(document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)').children).forEach((e2) => {
                 e2.style.backgroundColor = '';
             });
             city.style.backgroundColor = '#B4D5FF';
             const allSelect = document.createElement('div');
             allSelect.innerText = '전체 선택';
-            allSelect.addEventListener('click', () => {
-                if (Array.from(document.querySelectorAll('#cities > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).some((e3) => Boolean(e3.style.backgroundColor==''))) {
-                    Array.from(document.querySelectorAll('#cities > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).forEach((e2) => {
+            allSelect.addEventListener('click', () => { 
+                if (Array.from(document.querySelectorAll('#cities > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).some((e3) => Boolean(e3.style.backgroundColor==''))) {
+                    Array.from(document.querySelectorAll('#cities > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).forEach((e2) => {
                         const city2 = e.child.filter((e3)=>e3.id == e2.dataset.id)[0];
                         const locationData = e.name + ' ' + city2.name;
                         if (tourLocation.indexOf(locationData)==-1) {
@@ -336,7 +336,7 @@ if (regionDropDown) {
                         }
                     });
                 } else {
-                    Array.from(document.querySelectorAll('#cities > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).forEach((e2) => {
+                    Array.from(document.querySelectorAll('#cities > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:not(:first-child)')).forEach((e2) => {
                         const city2 = e.child.filter((e3)=>e3.id == e2.dataset.id)[0];
                         const locationData = e.name + ' ' + city2.name;
                         if (tourLocation.indexOf(locationData)!=-1) {
@@ -345,8 +345,8 @@ if (regionDropDown) {
                     });
                 }
             });
-            document.querySelector('#cities > div:nth-of-type(2) > div:nth-of-type(2)').innerHTML = '';
-            document.querySelector('#cities > div:nth-of-type(2) > div:nth-of-type(2)').appendChild(allSelect);
+            document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2)').innerHTML = '';
+            document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2)').appendChild(allSelect);
             e.child.forEach((e2) => {
                 const city2 = document.createElement('div');
                 city2.classList.add('city');
@@ -362,13 +362,30 @@ if (regionDropDown) {
                         city2.style.backgroundColor = '#B4D5FF';
                     } else {
                         tourLocation.splice(tourLocation.indexOf(locationData), 1);
-                    city2.style.backgroundColor = '';
+                        city2.style.backgroundColor = '';
                     }
+                    document.querySelector('#cities > div:nth-of-type(2)').innerHTML = '';
+                    tourLocation.forEach((e3) => {
+                        const div = document.createElement('div');
+                        div.innerText = e3;
+                        div.addEventListener('click', () => {
+                            tourLocation.splice(tourLocation.indexOf(e3), 1);
+                            // backgroundColor 변경해 주어야 함.
+                            console.log(region);
+                            const parentCities = Array.from(document.querySelectorAll('#cities > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > .city'));
+                            const parentCity = parentCities.filter((e4) => e4.innerHTML == e3.split(' ')[0])[0];
+                            console.log(parentCity.dataset.id);
+                            console.log(region.filter((e4) => e4.id == parentCity.dataset.id)[0]);
+                            // 고쳐라 fix
+                            
+                        });
+                        document.querySelector('#cities > div:nth-of-type(2)').appendChild(div);
+                    });
                 });
-                document.querySelector('#cities > div:nth-of-type(2) > div:nth-of-type(2)').appendChild(city2);
+                document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2)').appendChild(city2);
             });
         });
-        document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(2)').appendChild(city);
+        document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)').appendChild(city);
         if (i==0) city.click();
     });
     

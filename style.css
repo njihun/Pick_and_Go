@@ -370,6 +370,7 @@ header {
 
 #cities {
     display: none;
+    flex-direction: column;
     position: absolute;
     top: 46px;
     background-color: #fff;
@@ -382,9 +383,14 @@ header {
 
 #cities.open {
     display: flex;
+
 }
 
-#cities > div > div:nth-of-type(1) {
+#cities > div:nth-of-type(1) {
+    display: flex;
+}
+
+#cities > div:nth-of-type(1) > div > div:nth-of-type(1) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -392,20 +398,20 @@ header {
     border-bottom: 1px solid #D9D9D9;
 }
 
-#cities > div > div:nth-of-type(2) {
+#cities > div:nth-of-type(1) > div > div:nth-of-type(2) {
     height: 200px;
     overflow-y: auto;
     scrollbar-color: #000 rgba(0,0,0,0);
 }
 
-#cities > div:nth-of-type(1) > div:nth-of-type(2) {
+#cities > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) {
     border-end-start-radius: 11px;
 }
-#cities > div:nth-of-type(2) > div:nth-of-type(2) {
+#cities > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) {
     border-end-end-radius: 11px;
 }
 
-#cities > div > div:nth-of-type(1) > div {
+#cities > div:nth-of-type(1) > div > div:nth-of-type(1) > div {
     background-color: #CFCFCF;
     border: 2px solid #fff;
     box-shadow: 0px 4px 5px 0px #D9D9D9;
@@ -417,35 +423,39 @@ header {
     margin: 10px;
 }
 
-#cities > div > div:nth-of-type(2) > div:hover {
+#cities > div:nth-of-type(1) > div > div:nth-of-type(2) > div:hover {
     background-color: #B4D5FF;
 }
 
-#cities > div > div:nth-of-type(2) > div {
+#cities > div:nth-of-type(1) > div > div:nth-of-type(2) > div {
     padding: 10px;
     padding-left: 14px;
 }
 
-#cities > div > div:nth-of-type(2) > div:first-child {
+#cities > div:nth-of-type(1) > div > div:nth-of-type(2) > div:first-child {
     border-top: none;
 }
 
-#cities > div > div > div {
+#cities > div:nth-of-type(1) > div > div > div {
     background-color: #fff;
     white-space: nowrap;
     border: 1px solid #D9D9D9;
 }
 
-#cities>.city>.child {
+#cities > div:nth-of-type(1)>.city>.child {
     display: none;
 }
 
-#cities>.city:hover>.child {
+#cities > div:nth-of-type(1)>.city:hover>.child {
     display: block;
 }
 
-#cities > div > div:nth-of-type(2) > div:not(:last-child) {
+#cities > div:nth-of-type(1) > div > div:nth-of-type(2) > div:not(:last-child) {
     border-bottom: inherit;
+}
+
+#cities > div:nth-of-type(2) {
+    overflow-x: auto;
 }
 
 #recommend>*:nth-child(2)>div:nth-of-type(2) {
