@@ -173,9 +173,14 @@ switch (tourType) {
             
             otherContainer.appendChild(tourList);
         });
+        const div2 = document.createElement('div');
+        div2.id = 'schedule';
+        const btn = document.createElement('div');
+        btn.innerHTML = '여행 계획 전체를 추천받고 싶다면? <a href="#">클릭</a>';
+        div2.appendChild(btn);
         
 
-        otherTourList.append(title, otherContainer);
+        otherTourList.append(title, otherContainer, div2);
         document.getElementById('container').appendChild(otherTourList);
     default:
         break;

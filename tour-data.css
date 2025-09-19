@@ -3,6 +3,7 @@
     border-radius: 10px;
     padding: 20px;
     position: relative;
+    margin-bottom: 15px;
 }
 
 .title {
@@ -58,4 +59,19 @@
 
 .tour-data {
     margin-left: 20px;
+}
+
+#schedule {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#schedule > div {
+    padding: 12px;
+    padding-left: 35px;
+    padding-right: 35px;
+    border: 1px solid;
+    background-color: #FFD2D2;
+    border-radius: 15px;
 }
