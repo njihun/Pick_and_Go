@@ -7,11 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="tourList">
-        <h2 class="title">관광지 이름</h2>
-        <p class="addr">관광지 주소</p>
-        <img class="tour-img" alt="관광지 사진">
-        <div class="star" onclick="window.star();"></div>
+    <div id="container">
+        <div class="tourList">
+            <h2 class="title">관광지 이름</h2>
+            <p class="addr">관광지 주소</p>
+            <img class="tour-img" alt="관광지 사진">
+            <div class="star" onclick="window.star(document.querySelector('.tourList'));"></div>
+        </div>
     </div>
     <script src="./tour-data.js"></script>
 </body>
