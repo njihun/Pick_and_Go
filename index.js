@@ -1,9 +1,9 @@
 import { getRegion } from "./parser.js";
 import { mypage, favoriteAttractions, tourData, randomTourRecommned } from "./pageLoad.js";
 
-let tourId = new URL(location.href);
-tourId = tourId.searchParams.get('id');
-if (tourId) {
+let type = new URL(location.href);
+type = type.searchParams.get('type');
+if (type) {
     tourData();
 } else {
     try {
