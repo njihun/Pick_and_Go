@@ -379,8 +379,11 @@ if (regionDropDown) {
                             const parentCity = parentCities.filter((e4) => e4.innerHTML == e3.split(' ')[0])[0];
                             console.log(parentCity.dataset.id);
                             console.log(region.filter((e4) => e4.id == parentCity.dataset.id)[0]);
-                            // 고쳐라 fix
-                            
+                            Array.from(document.querySelector('#cities > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)').children).filter((e4) => e4.style.backgroundColor)[0].click();
+
+                            setTimeout(() => {
+                                document.querySelector('#cities > div:nth-of-type(2)').removeChild(div);
+                            }, 0);
                         });
                         document.querySelector('#cities > div:nth-of-type(2)').appendChild(div);
                     });
@@ -394,6 +397,8 @@ if (regionDropDown) {
     
     regionElement.addEventListener('click', (e) => {
         if (document.getElementById('cities').contains(e.target)) return;
+        console.log(e.target);
+        
         if (regionDropDown.classList.contains('open')) {
             document.querySelector('.dropdown-icon').classList.remove('open');
             regionDropDown.classList.remove('open');
