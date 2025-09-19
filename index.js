@@ -244,6 +244,7 @@ window.editUserData = editUserData;
 function randomTour() {
     if (tourLocation.length > 0) {
         if (sessionStorage.getItem('jwt')) {
+            localStorage.setItem('tourLocation', JSON.stringify(tourLocation));
             randomTourRecommned();
         } else {
             const notice = document.getElementById('notice');
@@ -359,6 +360,8 @@ if (regionDropDown) {
                 city2.addEventListener('click', () => {
                     if (tourLocation.indexOf(locationData)==-1) {
                         tourLocation.push(locationData);
+                        console.log(tourLocation);
+                        
                         city2.style.backgroundColor = '#B4D5FF';
                     } else {
                         tourLocation.splice(tourLocation.indexOf(locationData), 1);

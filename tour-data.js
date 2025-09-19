@@ -1,7 +1,8 @@
 const url = 'https://d0g0h1.world';
-import { tourLocation } from "./index.js";
+// import { tourLocation } from "./index.js";
 
 // 쿼리 파라미터 바탕으로 분류하여 화면에 나타낼 것.
+const tourLocation = JSON.parse(localStorage.getItem('tourLocation'));
 
 
 
@@ -104,6 +105,7 @@ switch (tourType) {
         }
         break;
     case 'recommend-data':
+        console.log(tourLocation);
         
         const req = {
             "method": "POST",
