@@ -130,6 +130,7 @@ switch (tourType) {
         otherTourList.id = 'otherTourList';
 
         const title = document.createElement('div');
+        title.classList.add('title');
         const div = document.createElement('div');
         div.innerText = '후순위 관광지';
         title.appendChild(div);

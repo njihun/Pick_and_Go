@@ -36,6 +36,25 @@
 
 #otherTourList .tourList {
     display: flex;
+    border: none;
+}
+
+#otherTourList > .title {
+    border-bottom: 3px solid #C4C4C4;
+}
+
+#otherTourList > .title > div {
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+#otherTourList > .title::after {
+    content: '';
+    width: 150px;
+    position: absolute;
+    border-bottom: 3px solid;
 }
 
 .rank {
