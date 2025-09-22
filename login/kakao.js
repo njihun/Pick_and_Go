@@ -8,7 +8,9 @@ fetch(`${url}?code=${code}`).then((res) => {
     console.log(data);
     
     window.opener.postMessage({ data }, window.location.origin);
-    window.close();
+    setTimeout(() => {
+        window.close();
+    }, 100);
 }).catch((err)=>{
     document.body.innerHTML = 'Failed to Redirect.';
     console.log(err);
