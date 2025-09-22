@@ -294,6 +294,11 @@ function recommendTour(params) {
         };
     } else {
         if (sessionStorage.getItem('jwt')) {
+            localStorage.setItem('tourLocation', JSON.stringify(tourLocation));
+            localStorage.setItem('numofPeople', document.querySelector("#recommend > div > div:nth-child(1) > input[type=number]").value);
+            const url2 = new URL(location.href);
+            url2.searchParams.set('type', 'recommend-data');
+            location.href = url2.href;
             // 추천 관광지 보여주는 페이지로 전환
         } else {
             const notice = document.getElementById('notice');

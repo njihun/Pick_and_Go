@@ -66,8 +66,7 @@ Array.from(select).forEach((e, i) => {
                 const url2 = new URL(location.href);
                 url2.searchParams.set('type', 'recommend-data');
                 location.href = url2.href;
-
-                console.log(res);
+                
                 seq++;
                 return;
             }

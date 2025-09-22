@@ -106,16 +106,16 @@ switch (tourType) {
         break;
     case 'recommend-data':
         console.log(tourLocation);
-        
+        const body = {};
+        body["location"] = tourLocation;
+        body["numofPeople"] = localStorage.getItem("numofPeople");
         const req = {
             "method": "POST",
             "headers": {
                 "Content-Type":"application/json",
                 "Authorization":"Bearer "+sessionStorage.getItem('jwt')
             },
-            "body": JSON.stringify({
-                "location": tourLocation
-            })
+            "body": JSON.stringify(body)
         }
         let res = await fetch(url+'/recommend/getRecommendTour', req);
         res = await res.json();
