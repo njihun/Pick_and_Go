@@ -5,13 +5,11 @@ const url = 'https://d0g0h1.world/kakao/code';
 fetch(`${url}?code=${code}`).then((res) => {
     return res.text();
 }).then((data)=>{
-    console.log(data);
-    
     window.opener.postMessage({ data }, window.location.origin);
     setTimeout(() => {
         window.close();
     }, 100);
 }).catch((err)=>{
     document.body.innerHTML = 'Failed to Redirect.';
-    console.log(err);
+    window.opener.postMessage({ data }, window.location.origin);
 });
