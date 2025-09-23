@@ -57,6 +57,104 @@ async function star(e) {
 }
 window.star = star;
 
+function travelReommend() {
+    const tourList = Array.from(document.querySelectorAll('.tourList'));
+
+    const container = document.getElementById('container');
+    container.innerHTML = '';
+    const otherContainer = document.createElement('div');
+    otherContainer.id = 'otherTourList';
+    otherContainer.classList.add('schedule');
+
+    tourList.forEach((e, i) => {
+        const tourList = document.createElement('div');
+        tourList.dataset.id = e.dataset.id;
+        tourList.style.position = 'relative';
+        tourList.classList.add('tourList');
+        
+        const checkbox = document.createElement('div');
+        checkbox.classList.add("checkbox");
+        const input = document.createElement('input');
+        input.type = "checkbox";
+        input.addEventListener('change', (e) => {
+            if (input.checked) {
+                tourList.classList.add("checked");
+            } else {
+                tourList.classList.remove("checked");
+            }
+        });
+        checkbox.appendChild(input);
+
+        const rank = document.createElement('div');
+        rank.classList.add('rank');
+        rank.innerText = i+1+".";
+
+        const div = document.createElement('div');
+        div.classList.add('tour-img');
+
+        const img = document.createElement('img');
+        img.src = e.querySelector('img').src;
+        div.appendChild(img);
+
+        const data = document.createElement('div');
+        data.classList.add('tour-data');
+
+        const title = document.createElement('div');
+        title.classList.add('title');
+        title.innerText = e.querySelector('.title').innerText;
+        const addr = document.createElement('div');
+        addr.classList.add('addr');
+        addr.innerText = e.querySelector('.addr').innerText;
+
+        data.append(title, addr);
+
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.onclick = () => window.star(tourList);
+        
+        tourList.append(checkbox, rank, div, data, star);
+        tourList.addEventListener('click', (e) => {
+            if (e.target.tagName == 'INPUT') return;
+            input.click();
+        });
+        
+        otherContainer.appendChild(tourList);
+    });
+    
+    const div = document.createElement('div');
+    div.classList.add('stationery');
+    div.innerText = "여행에서 꼭 가고 싶은 관광지를 선택해 주세요!";
+
+    const div2 = document.createElement('div');
+    div2.id = 'submit';
+    const btn = document.createElement('button');
+    btn.innerText = "확인";
+    btn.addEventListener('click', async () => {
+        const selectedTourList = Array.from(document.querySelectorAll('.tourList.checked'));
+        const body = {};
+        body["location"] = tourLocation;
+        body["numofPeople"] = localStorage.getItem("numofPeople");
+        body["selectedTourID"] = selectedTourList.map((e) => e.dataset.id);
+        const req = {
+            "method": "POST",
+            "headers": {
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+sessionStorage.getItem('jwt')
+            },
+            "body": JSON.stringify(body)
+        }
+        let res = await fetch(url+'/recommend/getRecommendPlan', req);
+        res = await res.json();
+        console.log(res);
+    });
+    div2.appendChild(btn);
+
+    container.append(div, otherContainer, div2);
+
+    
+}
+window.travelReommend = travelReommend;
+
 switch (tourType) {
     case 'tour-data':
         let tourId = query.get('id');
@@ -105,7 +203,6 @@ switch (tourType) {
         }
         break;
     case 'recommend-data':
-        console.log(tourLocation);
         const body = {};
         body["location"] = tourLocation;
         body["numofPeople"] = localStorage.getItem("numofPeople");
@@ -180,7 +277,7 @@ switch (tourType) {
         const div2 = document.createElement('div');
         div2.id = 'schedule';
         const btn = document.createElement('div');
-        btn.innerHTML = '여행 계획 전체를 추천받고 싶다면? <a href="#">클릭</a>';
+        btn.innerHTML = '여행 계획 전체를 추천받고 싶다면? <a href="#" onclick="window.travelReommend();">클릭</a>';
         div2.appendChild(btn);
         
 
