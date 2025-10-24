@@ -1,9 +1,161 @@
+.rating{
+  /* 입력값 (0~5) */
+  --rating: 0;
+  --star-size: 24px;
+  --star-gap: 3px;
+  --star-empty: #d1d5db;
+  --star-fill:  #000;
+  --percent: calc(var(--rating) / 5 * 100%);
+
+  position: relative;
+  display: inline-block;
+  font-size: var(--star-size);
+  line-height: 1;
+  letter-spacing: var(--star-gap);
+  font-family: ui-sans-serif, system-ui, "Apple Color Emoji", "Segoe UI Symbol", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+/* 바닥(빈 별) */
+.rating::before{
+  content: "★★★★★";           /* 5개 고정 */
+  color: var(--star-empty);
+}
+
+/* 위층(채워지는 별) */
+.rating::after{
+  content: "★★★★★";
+  position: absolute;
+  inset: 0;
+  /* 왼쪽부터 --percent 만큼 채우고 나머지는 투명 */
+  background: linear-gradient(
+    90deg,
+    var(--star-fill) var(--percent),
+    transparent var(--percent)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;           /* 텍스트에 그라데이션만 보이게 */
+  pointer-events: none;
+}
+
 .tourList {
     border: 1px solid;
     border-radius: 10px;
     padding: 20px;
     position: relative;
     margin-bottom: 15px;
+}
+
+#container > div:nth-of-type(2) {
+    border: 1px solid;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.tour-data-option {
+    display: flex;
+    border-bottom: 2px solid #C4C4C4;
+}
+
+.tour-data-option > div {
+    position: relative;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.tour-data-option > div.select::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    background-color: #000;
+    height: 2px;
+    width: 100%;
+}
+
+#container .container.statistics {
+    display: flex;
+}
+
+#container .container.statistics > div:nth-of-type(1) {
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+#container .container.statistics > div:nth-of-type(1) > div {
+    margin: 50px;
+}
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(1) > div {
+    background-color: #C8E4FF;
+    width: 250px;
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 5px;
+    margin-left: 58px;
+}
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-last-of-type(1) {
+    background-color: #1B4AC0;
+    color: #fff;
+}
+
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    /* margin-right: 0; */ /* 40대 남성에게 인기 제일 많다. 그거 적용할 때 공백 없애는 코드 */
+}
+
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(2) > div {
+    display: flex;
+    margin: 10px;
+}
+
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(1) {
+    white-space: nowrap;
+}
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) {
+    --male: "0%";
+    display: flex;
+    width: 100%;
+    background-color: #6D81FF;
+    justify-content: space-between;
+    margin-left: 15px;
+    position: relative;
+}
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2)::after {
+    content: var(--male);
+    position: absolute;
+    right: 10px;
+}
+
+#container .container.statistics > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div {
+    --female: 0%;
+    background-color: #FF8383;
+    text-indent: 10px;
+    width: var(--female);
+}
+
+#container .container.statistics > div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#container .container.statistics > div:nth-of-type(2) img {
+    width: 100px;
+    margin: 0 auto;
 }
 
 #otherTourList.schedule .tourList.checked {
@@ -48,6 +200,23 @@
 
 .star.open {
     background-image: url(./imgs/yellow-star.png);
+}
+
+#addTourList {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+#addTourList > * {
+    background-color: #1B4AC0;
+    padding: 15px;
+    color: #fff;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
 }
 
 #otherTourList {

@@ -9,11 +9,62 @@
 <body>
     <div id="container">
         <div class="tourList">
-            <h2 class="title">관광지 이름</h2>
+            <div style="display: flex; align-items: center;">
+                <h2 class="title">관광지 이름</h2>
+                <div style="display: flex; flex-direction: column; align-items: center; margin-left: 18px;">
+                    <b>유저 평균 평점</b>
+                    <div class="rating"></div>
+                </div>
+            </div>
             <p class="addr">관광지 주소</p>
             <img class="tour-img" alt="관광지 사진">
+            <div id="addTourList">
+                <div onclick="window.star(document.querySelector('.tourList'));">관심 관광지에 추가</div>
+                <div onclick="window.setVisitedTour">방문한 관광지 추가</div>
+            </div>
             <div class="star" onclick="window.star(document.querySelector('.tourList'));"></div>
         </div>
+        <div>
+            <div class="tour-data-option">
+                <div onclick="loadGraph(this);" data-classname="key-info">주요정보</div>
+                <div onclick="loadGraph(this);" data-classname="statistics">통계</div>
+            </div>
+            <div class="container">
+                <div>
+                    <div>
+                        <div>이번 달 방문객 수: 12</div>
+                        <div>전체 방문객 수: 32</div>
+                        <div>즐겨찾기 추가된 횟수: 12</div>
+                    </div>
+                    <div>
+                        <div>
+                            <div>20대</div>
+                            <div>
+                                <div style="--female: 36%">36%</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>30대</div>
+                            <div>
+                                <div style="--female: 47%">47%</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>40대</div>
+                            <div>
+                                <div style="--female: 0%">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div>
+                    <img src="./imgs/profile.png" alt="profile">
+                    <p>40대 남성</p>
+                    <p>에게 인기있는 장소예요!</p>
+                </div> -->
+            </div>
+        </div>
+
     </div>
     <script src="./tour-data.js"></script>
 </body>

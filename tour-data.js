@@ -1,18 +1,11 @@
 const url = 'https://d0g0h1.world';
-// import { tourLocation } from "./index.js";
 
 // 쿼리 파라미터 바탕으로 분류하여 화면에 나타낼 것.
 const tourLocation = JSON.parse(localStorage.getItem('tourLocation'));
+let data;
 
-
-
-// let interTourList = [];
 let query = new URL(location.href).searchParams;
 let tourType = query.get('type');
-// for (const [key, value] of query.entries()) {
-//     console.log(value, key);
-// }
-console.log(tourType);
 
 async function star(e) {
     let work;
@@ -30,12 +23,26 @@ async function star(e) {
             login.style.display = 'block';
         };
     } else {
-        if (e.querySelector('.star').classList.contains('open')) {
-            e.querySelector('.star').classList.remove('open');
-            work = "DELETE";
+        if (tourType = "tour-data") {
+            if (document.getElementById('addTourList').classList.contains('open')) {
+                document.getElementById('addTourList').classList.remove('open');
+                document.getElementById('addTourList').children[0].textContent = "관심 관광지에 추가";
+                work = "DELETE";
+            } else {
+                document.getElementById('addTourList').classList.add('open');
+                document.getElementById('addTourList').children[0].textContent = "관심 관광지에서 제거";
+                work = "ADD";
+            }
+            
         } else {
-            e.querySelector('.star').classList.add('open');
-            work = "ADD";
+            if (e.querySelector('.star').classList.contains('open')) {
+                e.querySelector('.star').classList.remove('open');
+                work = "DELETE";
+            } else {
+                e.querySelector('.star').classList.add('open');
+                document.getElementById('addTourList').classList.add('open');
+                work = "ADD";
+            }
         }
         const req = {
             "method": "POST",
@@ -56,6 +63,34 @@ async function star(e) {
     }
 }
 window.star = star;
+
+async function setVisitedTour(e) {
+    if (e.getElementById('addTourList').classList.contains('open')) {
+        document.getElementById('addTourList').classList.remove('open');
+        work = "DELETE";
+    } else {
+        document.getElementById('addTourList').classList.add('open');
+        work = "ADD";
+    }
+    const req = {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+jwt
+        },
+        "body": JSON.stringify({
+            "attribute": work,
+            "contendidList": [
+                e.dataset.id
+            ]
+        })
+    }
+    let res = await fetch(url+'/tour/setInterTour', req);
+    res = await res.json();
+    console.log(res);
+    
+}
+window.setVisitedTour = setVisitedTour;
 
 function travelReommend() {
     const tourList = Array.from(document.querySelectorAll('.tourList'));
@@ -155,15 +190,232 @@ function travelReommend() {
 }
 window.travelReommend = travelReommend;
 
+function loadGraph(e) {
+    Array.from(e.parentElement.children).forEach((e2) => {
+        e2.classList.remove('select');
+    });
+    e.classList.add('select');
+    document.querySelector('#container .container').innerHTML = '';
+    switch (e.dataset.classname) {
+        case "key-info":
+            document.querySelector('#container .container').classList.remove("statistics");
+            document.querySelector('#container .container').classList.add("key-info");
+            
+            // 데이터 객체
+const info = data.detail;
+
+
+// 🔹 카드 컨테이너 생성
+const card = document.createElement("div");
+card.className = "event-card";
+
+// 🔹 기본 정보 섹션
+const header = document.createElement("div");
+header.className = "event-header";
+
+const title = document.createElement("h2");
+title.textContent = "울주 간절곶 해맞이 행사";
+
+const contact = document.createElement("div");
+contact.innerHTML = `
+  📞 ${info.tel} &nbsp;&nbsp; 🌐 <a href="https://${info.homepage}" target="_blank">${info.homepage}</a>
+`;
+
+header.appendChild(title);
+header.appendChild(contact);
+
+// 🔹 소개 및 내용 섹션
+const body = document.createElement("div");
+body.className = "event-body";
+
+// 개별 섹션 생성 함수
+function createSection(label, content) {
+  const section = document.createElement("div");
+  section.className = "event-section";
+
+  const heading = document.createElement("h3");
+  heading.textContent = label;
+
+  const text = document.createElement("p");
+  text.innerHTML = content.replace(/(?<!^)(?=\d\\\.)/g, '<br><br>').replace(/(\d)\\\./g, "$1.").replace(/\\-/g, '<br>-');
+
+  section.appendChild(heading);
+  section.appendChild(text);
+  return section;
+}
+
+// 섹션 추가
+body.appendChild(createSection("행사 개요", info.overview));
+body.appendChild(createSection("행사 소개", info["행사소개"]));
+body.appendChild(createSection("행사 내용", info["행사내용"]));
+
+// 🔹 카드 결합
+card.appendChild(header);
+card.appendChild(body);
+
+// 🔹 문서에 추가
+document.querySelector('#container .container').appendChild(card);
+
+// 🔹 간단한 스타일 추가
+const style = document.createElement("style");
+style.textContent = `
+.event-card {
+  max-width: 700px;
+  margin: 16px auto;
+  padding: 24px;
+  border-radius: 16px;
+  background: #f9f9ff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  line-height: 1.6;
+}
+
+.event-header {
+  border-bottom: 2px solid #6d81ff;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.event-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.event-header a {
+  color: #6d81ff;
+  text-decoration: none;
+}
+
+.event-header a:hover {
+  text-decoration: underline;
+}
+
+.event-body .event-section {
+  margin-bottom: 20px;
+}
+
+.event-body h3 {
+  color: #6d81ff;
+  margin-bottom: 6px;
+}
+
+.event-body p {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  white-space: pre-wrap;
+}
+`;
+document.head.appendChild(style);
+
+            
+            break;
+        case "statistics":
+            // 최상위 컨테이너
+            const container2 = document.createElement("div");
+
+            // 첫 번째 블록 (방문객 수 정보)
+            const statsBlock = document.createElement("div");
+            const stats = [
+                "이번 달 방문객 수: 12",
+                "전체 방문객 수: 32",
+                "즐겨찾기 추가된 횟수: 12"
+            ];
+
+            stats.forEach(text => {
+                const div = document.createElement("div");
+                div.textContent = text;
+                statsBlock.appendChild(div);
+            });
+
+            // 두 번째 블록 (연령대 및 비율)
+            const ageBlock = document.createElement("div");
+            const ages = [
+                { label: "20대", female: "36%" },
+                { label: "30대", female: "47%" },
+                { label: "40대", female: "0%" }
+            ];
+
+            ages.forEach(({ label, female }) => {
+                const ageRow = document.createElement("div");
+
+                const labelDiv = document.createElement("div");
+                labelDiv.textContent = label;
+
+                const barContainer = document.createElement("div");
+                const bar = document.createElement("div");
+                bar.style.setProperty("--female", female);
+                bar.textContent = female;
+                barContainer.appendChild(bar);
+
+                ageRow.appendChild(labelDiv);
+                ageRow.appendChild(barContainer);
+
+                ageBlock.appendChild(ageRow);
+            });
+
+            // 상위 div에 두 블록을 추가
+            container2.appendChild(statsBlock);
+            container2.appendChild(ageBlock);
+            
+
+            // 원하는 위치에 추가 (예: body)
+            document.querySelector('#container .container').appendChild(container2);
+
+
+
+            document.querySelector('#container .container').classList.remove("key-info");
+            document.querySelector('#container .container').classList.add("statistics");
+            const statistics = document.querySelectorAll("#container .container.statistics > div:nth-of-type(1) > div");
+            const thisMonth = new Date().getFullYear() + '-' + (new Date().getMonth() + 1);
+            const thisMonthCount = data.statistics.visitedResult.some((e2) => e2.period == thisMonth) ? data.statistics.visitedResult.filter((e2) => e2.period == thisMonth)[0].visit_count : 0;
+            statistics[0].children[0].innerText = '이번 달 방문객 수: ' + thisMonthCount;
+            let everyMonthCount = 0;
+            data.statistics.visitedResult.forEach((e2) => everyMonthCount += e2.visit_count);
+            statistics[0].children[1].innerText = '전체 방문객 수: ' + everyMonthCount;
+            const interCount = data.statistics.interResult[0].inter_count;
+            statistics[0].children[2].innerText = '즐겨찾기 추가된 횟수: ' + interCount;
+            
+            let userStatisticResult = [];
+            userStatisticResult.push(data.statistics.userStatisticResult.filter((e2) => e2.age_group == "20-29"));
+            userStatisticResult.push(data.statistics.userStatisticResult.filter((e2) => e2.age_group == "30-39"));
+            userStatisticResult.push(data.statistics.userStatisticResult.filter((e2) => e2.age_group == "40-49"));
+            userStatisticResult.forEach((e2, i) => {
+                const male = e2.filter((e3) => e3.user_sex == "male").length==0 ? 0 : Number(e2.filter((e3) => e3.user_sex == "male")[0].visit_count);
+                const female = e2.filter((e3) => e3.user_sex == "female").length==0 ? 0 : Number(e2.filter((e3) => e3.user_sex == "female")[0].visit_count);
+                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").style.setProperty("--male", "'" + Math.round(male / (male + female) * 100) + "%'");
+                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].innerText = Math.round(female / (male + female) * 100) + '%';
+                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].style.setProperty("--female", Math.round(female / (male + female) * 100) + '%');
+            });
+            break;
+        default:
+            break;
+    }
+    
+}
+window.loadGraph = loadGraph;
+
+async function getTourDetail(tourId) {
+    // let res = await fetch(url+'/tour/getTourDetail?contentId='+tourId);
+    // res = await res.json();
+    const res = {"message":"관광지 상세정보 조회 성공","data":{"tourInfo":[{"contentid":"141375","contenttypeid":"15","addr1":"울산광역시 울주군 서생면 간절곶해안길 189","title":"울주 간절곶 해맞이 축제","mapx":129.3598710555,"mapy":35.3610443336,"firstimage":"http://tong.visitkorea.or.kr/cms/resource/87/3057487_image2_1.JPG","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/87/3057487_image3_1.JPG","lDongRegnCd":"31","lDongSignguCd":"710","lclsSystm1":"EV","lclsSystm2":"EV01","lclsSystm3":"EV010200","avg_rating":"0.00"}],"detail":{"tel":"052-980-2232","homepage":"www.ucf.or.kr","overview":"울주 간절곶은 한반도에서 2025년 1월 1일 새해 첫 일출을 가장 빨리 만날 수 있는 곳이다. 1월 1일 새해 첫 해를 가장 빨리 만날 수있는 간절곶을 방문하는 해맞이객을 위해 눈과 귀와 입이 즐거운 프로그램이 준비되어 있다. 인기가수가 출연하는 <해넘이 행사>, 2025년새해 첫 일출을 기념하며 1천500대의 드론이 연출하는 <드론라이트쇼>, <축하불꽃놀이>, <새해 떡국 나눔>이 있으며, 새해 첫 일출을만나기 위해 간절곶을 방문한다면 한반도 첫 일출과 함께 다채로운 행사를 만날 수 있다.","행사소개":"울주 간절곶은 한반도에서 2025년 1월 1일 새해 첫 일출을 가장 빨리 만날 수 있는 곳이다. 1월 1일 새해 첫 해를 가장 빨리 만날 수있는 간절곶을 방문하는 해맞이객을 위해 눈과 귀와 입이 즐거운 프로그램이 준비되어 있다. 인기가수가 출연하는 <해넘이 행사>, 2025년새해 첫 일출을 기념하며 1천500대의 드론이 연출하는 <드론라이트쇼>, <축하불꽃놀이>, <새해 떡국 나눔>이 있으며, 새해 첫 일출을만나기 위해 간절곶을 방문한다면 한반도 첫 일출과 함께 다채로운 행사를 만날 수 있다.","행사내용":"1\\. 공연 프로그램  \\- 해넘이 기념 음악 콘서트  \\- 1천500대 드론라이트쇼, 축하불꽃놀이    2\\. 행사 프로그램  \\- 새해 떡국 나눔    3\\. 전시 프로그램  \\- 야간경관전시  \\- 울주공공미술 프로젝트 <간절곶:비밀의 정원>    4\\. 홍보 프로그램  \\- 커피맛지도 <커피와 함께 즐기는 간절곶>  \\- 실시간 교통안내"},"statistics":{"visitedResult":[{"period":"2025-08","visit_count":10},{"period":"2025-07","visit_count":2},{"period":"2024-07","visit_count":2},{"period":"2025-01","visit_count":1},{"period":"2024-12","visit_count":1},{"period":"2025-02","visit_count":1},{"period":"2024-03","visit_count":3},{"period":"2024-11","visit_count":1},{"period":"total","visit_count":21}],"interResult":[{"inter_count":1}],"userStatisticResult":[{"age_group":"20-29","user_sex":"male","visit_count":8},{"age_group":"20-29","user_sex":"female","visit_count":5},{"age_group":"30-39","user_sex":"male","visit_count":4},{"age_group":"30-39","user_sex":"female","visit_count":1},{"age_group":"40-49","user_sex":"male","visit_count":3}]}}};
+    return res.data;
+}
+
 switch (tourType) {
     case 'tour-data':
+        document.querySelector('.star').style.display = 'none';
         let tourId = query.get('id');
-        const data = (await getTour([tourId]))[0];
-        document.querySelector('.tourList').dataset.id = tourId;
-        document.querySelector('.title').innerText = data.title;
-        document.querySelector('.addr').innerText = data.addr1;
-        document.querySelector('.tour-img').src = data.firstimage;
+        data = (await getTourDetail(tourId));
+        console.log(data);
         
+        document.querySelector('.tourList').dataset.id = tourId;
+        document.querySelector('.title').innerText = data.tourInfo[0].title;
+        document.querySelector('.addr').innerText = data.tourInfo[0].addr1;
+        document.querySelector('.tour-img').src = data.tourInfo[0].firstimage;
+
+        document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0].avg_rating + ")";
+        document.querySelector('.rating').style.setProperty("--rating", data.tourInfo[0].avg_rating);
         
         async function getTour(tourList) {
             let res = await fetch(url+'/tour/getTour', {
@@ -179,30 +431,53 @@ switch (tourType) {
             return res.data;
         }
         
+        
         const jwt = sessionStorage.getItem('jwt');
         async function getInterTour() {
             const url = 'https://d0g0h1.world';
             if (!jwt) return 'jwt is undefined';
-            let res = await fetch(url+'/tour/getInterTour', {
-                "method": "GET",
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Authorization":"Bearer "+jwt
-                }
-            });
-            res = await res.json();
-            return res.tours;
+            try {
+                let res = await fetch(url+'/tour/getInterTour', {
+                    "method": "GET",
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization":"Bearer "+jwt
+                    }
+                });
+                res = await res.json();
+                return res.tours;
+            } catch (err) {
+                console.log(err);
+                return [
+                    {
+                        "tour_id": "141375",
+                        "title": "울주 간절곶 해맞이 축제",
+                        "address": "울산광역시 울주군 서생면 간절곶해안길 189",
+                        "tourtype": "EV",
+                        "tourimage": "http://tong.visitkorea.or.kr/cms/resource/87/3057487_image2_1.JPG"
+                    }
+                ];
+            }
         }
         
         // 처음 로드될 때 관심 관광지인지 확인할 것
         const interTour = await getInterTour();
-        console.log(interTour);
         
         if (interTour.some((e)=>e["tour_id"] == tourId)) {
-            document.querySelector('.star').classList.add('open');
+            document.getElementById('addTourList').classList.add('open');
+            document.getElementById('addTourList').children[0].textContent = "관심 관광지에서 제거";
         }
+        // 주요 정보 로드
+        document.querySelector("#container > div:nth-child(2) > div:nth-child(1) > div:nth-child(1)").click();
         break;
     case 'recommend-data':
+        document.getElementById('addTourList').style.display = 'none';
+        data = (await getTourDetail("tour-data"));
+        document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0].avg_rating + ")";
+        document.querySelector('.rating').style.setProperty("--rating", data.tourInfo[0].avg_rating);
+        // 주요 정보 로드
+        document.querySelector("#container > div:nth-child(2) > div:nth-child(1) > div:nth-child(1)").click();
+
         const body = {};
         body["location"] = tourLocation;
         body["numofPeople"] = localStorage.getItem("numofPeople");
@@ -214,9 +489,9 @@ switch (tourType) {
             },
             "body": JSON.stringify(body)
         }
-        let res = await fetch(url+'/recommend/getRecommendTour', req);
-        res = await res.json();
-        // const res = ({"message":"추천결과","result":{"elapsed_time":43.76996159553528,"data":[{"addr1":"서울특별시 종로구 창의문로11가길 4 (부암동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060100","contentid":"2554142","contenttypeid":"14","createdtime":"20180718185120","firstimage":"http://tong.visitkorea.or.kr/cms/resource/81/3384781_image2_1.JPG","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/81/3384781_image3_1.JPG","cpyrhtDivCd":"Type3","mapx":"126.9626772472","mapy":"37.5937674640","mlevel":"6","modifiedtime":"20250317110026","sigungucode":"23","tel":"","title":"유금와당박물관","zipcode":"03022","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE07","lclsSystm3":"VE070100"},{"addr1":"서울특별시 종로구 대학로 104","addr2":"","areacode":"1","cat1":"A02","cat2":"A0202","cat3":"A02020700","contentid":"126487","contenttypeid":"12","createdtime":"20031106090000","firstimage":"http://tong.visitkorea.or.kr/cms/resource/35/3506735_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/35/3506735_image3_1.jpg","cpyrhtDivCd":"Type1","mapx":"127.0027239807","mapy":"37.5802419773","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"마로니에공원","zipcode":"03087","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE03","lclsSystm3":"VE030100"},{"addr1":"서울특별시 종로구 율곡로1길 40 (사간동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060500","contentid":"3056315","contenttypeid":"14","createdtime":"20231204105201","firstimage":"http://tong.visitkorea.or.kr/cms/resource/00/3056300_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/00/3056300_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"126.9807316132","mapy":"37.5776613265","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"갤러리미르","zipcode":"03062","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE07","lclsSystm3":"VE070600"},{"addr1":"서울특별시 종로구 이화동","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060600","contentid":"3013252","contenttypeid":"14","createdtime":"20230920144035","firstimage":"http://tong.visitkorea.or.kr/cms/resource/66/3012966_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/66/3012966_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"127.0039461920","mapy":"37.5766979666","mlevel":"6","modifiedtime":"20241015145536","sigungucode":"23","tel":"","title":"JTN아트홀","zipcode":"03100","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE06","lclsSystm3":"VE060100"},{"addr1":"서울특별시 종로구 북촌로11다길 22-3 (삼청동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0205","cat3":"A02050600","contentid":"3056278","contenttypeid":"12","createdtime":"20231204104534","firstimage":"http://tong.visitkorea.or.kr/cms/resource/39/3056239_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/39/3056239_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"126.9828007145","mapy":"37.5831329500","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"북촌전망대","zipcode":"03052","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE01","lclsSystm3":"VE010200"}],"length":438,"server data":{"success":{"count":0,"inputTourcontentid":[]},"alreadyExists":{"count":5,"alreadyExistscontentid":["2554142","126487","3056315","3013252","3056278"]},"fail":{"count":0,"error":[]}}}});
+        // let res = await fetch(url+'/recommend/getRecommendTour', req);
+        // res = await res.json();
+        const res = ({"message":"추천결과","result":{"elapsed_time":43.76996159553528,"data":[{"addr1":"서울특별시 종로구 창의문로11가길 4 (부암동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060100","contentid":"2554142","contenttypeid":"14","createdtime":"20180718185120","firstimage":"http://tong.visitkorea.or.kr/cms/resource/81/3384781_image2_1.JPG","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/81/3384781_image3_1.JPG","cpyrhtDivCd":"Type3","mapx":"126.9626772472","mapy":"37.5937674640","mlevel":"6","modifiedtime":"20250317110026","sigungucode":"23","tel":"","title":"유금와당박물관","zipcode":"03022","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE07","lclsSystm3":"VE070100"},{"addr1":"서울특별시 종로구 대학로 104","addr2":"","areacode":"1","cat1":"A02","cat2":"A0202","cat3":"A02020700","contentid":"126487","contenttypeid":"12","createdtime":"20031106090000","firstimage":"http://tong.visitkorea.or.kr/cms/resource/35/3506735_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/35/3506735_image3_1.jpg","cpyrhtDivCd":"Type1","mapx":"127.0027239807","mapy":"37.5802419773","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"마로니에공원","zipcode":"03087","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE03","lclsSystm3":"VE030100"},{"addr1":"서울특별시 종로구 율곡로1길 40 (사간동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060500","contentid":"3056315","contenttypeid":"14","createdtime":"20231204105201","firstimage":"http://tong.visitkorea.or.kr/cms/resource/00/3056300_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/00/3056300_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"126.9807316132","mapy":"37.5776613265","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"갤러리미르","zipcode":"03062","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE07","lclsSystm3":"VE070600"},{"addr1":"서울특별시 종로구 이화동","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060600","contentid":"3013252","contenttypeid":"14","createdtime":"20230920144035","firstimage":"http://tong.visitkorea.or.kr/cms/resource/66/3012966_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/66/3012966_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"127.0039461920","mapy":"37.5766979666","mlevel":"6","modifiedtime":"20241015145536","sigungucode":"23","tel":"","title":"JTN아트홀","zipcode":"03100","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE06","lclsSystm3":"VE060100"},{"addr1":"서울특별시 종로구 북촌로11다길 22-3 (삼청동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0205","cat3":"A02050600","contentid":"3056278","contenttypeid":"12","createdtime":"20231204104534","firstimage":"http://tong.visitkorea.or.kr/cms/resource/39/3056239_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/39/3056239_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"126.9828007145","mapy":"37.5831329500","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"북촌전망대","zipcode":"03052","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE01","lclsSystm3":"VE010200"}],"length":438,"server data":{"success":{"count":0,"inputTourcontentid":[]},"alreadyExists":{"count":5,"alreadyExistscontentid":["2554142","126487","3056315","3013252","3056278"]},"fail":{"count":0,"error":[]}}}});
         console.log(res);
         
         const recommendData = res.result.data;
@@ -283,6 +558,7 @@ switch (tourType) {
 
         otherTourList.append(title, otherContainer, div2);
         document.getElementById('container').appendChild(otherTourList);
+        break;
     default:
         break;
 }
