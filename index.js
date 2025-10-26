@@ -53,6 +53,7 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
 
 function login(user) {
     console.log('로그인 성공: '+user);
+    sessionStorage.setItem('temp', user);
     sessionStorage.setItem('jwt', data.PIGO_token);
     sessionStorage.setItem('name', user.name);
     sessionStorage.setItem('email', user.email);
