@@ -218,11 +218,11 @@ title.textContent = data.tourInfo[0].title;
 
 const contact = document.createElement("div");
 contact.innerHTML = `
-  📞 ${info.tel} &nbsp;&nbsp; 🌐 <a href="https://${info.homepage}" target="_blank">${info.homepage}</a>
+  📞 ${info?.tel} &nbsp;&nbsp; 🌐 <a href="https://${info?.homepage}" target="_blank">${info?.homepage}</a>
 `;
 
 header.appendChild(title);
-header.appendChild(contact);
+// header.appendChild(contact);
 
 // 🔹 소개 및 내용 섹션
 const body = document.createElement("div");
@@ -237,7 +237,7 @@ function createSection(label, content) {
   heading.textContent = label;
 
   const text = document.createElement("p");
-  text.innerHTML = content.replace(/(?<!^)(?=\d\\\.)/g, '<br><br>').replace(/(\d)\\\./g, "$1.").replace(/\\-/g, '<br>-');
+  text.innerHTML = content?.replace(/(?<!^)(?=\d\\\.)/g, '<br><br>')?.replace(/(\d)\\\./g, "$1.")?.replace(/\\-/g, '<br>-');
 
   section.appendChild(heading);
   section.appendChild(text);
@@ -245,9 +245,14 @@ function createSection(label, content) {
 }
 
 // 섹션 추가
-body.appendChild(createSection("행사 개요", info.overview));
-body.appendChild(createSection("행사 소개", info["행사소개"]));
-body.appendChild(createSection("행사 내용", info["행사내용"]));
+
+Object.keys(info).forEach((e2) => {
+    if (e2=='homepage') {
+        body.appendChild(createSection(e2, `<a href="${info[e2].replace(/^(?!http)/, "https://")}" target="_blank">${info[e2]}</a>`));
+    } else {
+        body.appendChild(createSection(e2, info[e2]));
+    }
+})
 
 // 🔹 카드 결합
 card.appendChild(header);
@@ -383,9 +388,29 @@ document.head.appendChild(style);
             userStatisticResult.forEach((e2, i) => {
                 const male = e2.filter((e3) => e3.user_sex == "male").length==0 ? 0 : Number(e2.filter((e3) => e3.user_sex == "male")[0].visit_count);
                 const female = e2.filter((e3) => e3.user_sex == "female").length==0 ? 0 : Number(e2.filter((e3) => e3.user_sex == "female")[0].visit_count);
-                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").style.setProperty("--male", "'" + Math.round(male / (male + female) * 100) + "%'");
-                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].innerText = Math.round(female / (male + female) * 100) + '%';
-                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].style.setProperty("--female", Math.round(female / (male + female) * 100) + '%');
+                const maleProportion = Math.round(male / (male + female) * 100) || 0;
+                const femaleProportion = Math.round(female / (male + female) * 100) || 0;
+                
+                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").style.setProperty("--male", "'" + maleProportion + "%'");
+                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].innerText = femaleProportion + '%';
+                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].style.setProperty("--female", femaleProportion + '%');
+                
+                statistics[1].children[i].querySelector("div > div:nth-of-type(2)").addEventListener('mousemove', (e) => {
+                    const over = statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].contains(e.target);
+                    // console.log('자식 포함?', over);
+                    if (over) {
+                        statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].innerText = femaleProportion + '%(' + female + '명)';
+                        statistics[1].children[i].querySelector("div > div:nth-of-type(2)").style.setProperty("--male", "'" + maleProportion + "%'");
+                    } else {
+                        statistics[1].children[i].querySelector("div > div:nth-of-type(2)").style.setProperty("--male", "'" + maleProportion + "%(" + male + "명)'");
+                        statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].innerText = femaleProportion + '%';
+                    }
+
+                    statistics[1].children[i].querySelector("div > div:nth-of-type(2)").addEventListener('mouseleave', () => {
+                        statistics[1].children[i].querySelector("div > div:nth-of-type(2)").style.setProperty("--male", "'" + maleProportion + "%'");
+                        statistics[1].children[i].querySelector("div > div:nth-of-type(2)").children[0].innerText = femaleProportion + '%';
+                    });
+                });
             });
             break;
         default:
@@ -407,6 +432,8 @@ switch (tourType) {
         document.querySelector('.star').style.display = 'none';
         let tourId = query.get('id');
         data = (await getTourDetail(tourId));
+        // 주요 정보 로드
+        document.querySelector("#container > div:nth-child(2) > div:nth-child(1) > div:nth-child(1)").click();
         console.log(data);
         
         document.querySelector('.tourList').dataset.id = tourId;
@@ -467,8 +494,6 @@ switch (tourType) {
             document.getElementById('addTourList').classList.add('open');
             document.getElementById('addTourList').children[0].textContent = "관심 관광지에서 제거";
         }
-        // 주요 정보 로드
-        document.querySelector("#container > div:nth-child(2) > div:nth-child(1) > div:nth-child(1)").click();
         break;
     case 'recommend-data':
         document.getElementById('addTourList').style.display = 'none';
