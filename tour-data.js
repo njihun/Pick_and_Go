@@ -517,10 +517,11 @@ const req2 = {
         "Content-Type":"application/json",
     }
 }
+console.log(`${url}/review/get?requestType=tour&tour_id=${tourId}}`);
 
-let reviews = await fetch(`${url}/review/get?requestType=tour&tour_id=${tourId}}`, req2);
+let reviews = await fetch(`${url}/review/get?requestType=tour&tour_id=${tourId}`, req2);
 reviews = await reviews.json();
-console.log("리뷰",reviews);
+console.log(reviews);
 
 // 전체 컨테이너
 const container = document.createElement("div");
@@ -625,6 +626,7 @@ function createReviewCard(review) {
   count.innerText = review.likes;
   count.style.textAlign = "center";
   count.style.marginLeft = "5px";
+  count.style.color = "#FF4343 ";
   thumbsUp.append(img, count);
   
   const thumbsDown = document.createElement("div");
@@ -639,6 +641,7 @@ function createReviewCard(review) {
   count2.innerText = review.dislikes;
   count2.style.textAlign = "center";
   count2.style.marginLeft = "5px";
+  count2.style.color = "#4385FF";
   thumbsDown.append(img2, count2);
   
 
@@ -739,7 +742,7 @@ userInfo.style.textAlign = "center";
 userInfo.style.fontSize = "12px";
 userInfo.style.color = "#333";
 userInfo.style.whiteSpace = "nowrap";
-userInfo.innerHTML = `${sessionStorage.getItem('name')} 님<br><span style="color:#888;">{id}</span>`;
+userInfo.innerHTML = `${sessionStorage.getItem('name')} 님<br><span style="color:#888;">@${sessionStorage.getItem('id')}</span>`;
 profileWrap.appendChild(userInfo);
 
 leftArea.appendChild(profileWrap);
@@ -825,7 +828,12 @@ submitBtn.addEventListener("click", async () => {
     let res = await fetch(url+'/review/write', req);
     res = await res.json();
     console.log(res);
-    alert("후기가 등록되었습니다!");    
+    if (res.message == '토큰 에러') {
+        alert("토큰이 만료되었습니다! 재로그인이 필요합니다.");
+    } else {
+        alert("후기가 등록되었습니다!");
+        location.reload();
+    }
     textArea.value = "";
     rating = 0;
     [...stars.children].forEach(s => (s.textContent = "☆"));
