@@ -202,116 +202,116 @@ function loadGraph(e) {
             document.querySelector('#container .container').classList.add("key-info");
             
             // 데이터 객체
-const info = data.detail;
+            const info = data.detail;
 
 
-// 🔹 카드 컨테이너 생성
-const card = document.createElement("div");
-card.className = "event-card";
+            // 🔹 카드 컨테이너 생성
+            const card = document.createElement("div");
+            card.className = "event-card";
 
-// 🔹 기본 정보 섹션
-const header = document.createElement("div");
-header.className = "event-header";
+            // 🔹 기본 정보 섹션
+            const header = document.createElement("div");
+            header.className = "event-header";
 
-const title = document.createElement("h2");
-title.textContent = data.tourInfo[0].title;
+            const title = document.createElement("h2");
+            title.textContent = data.tourInfo[0].title;
 
-const contact = document.createElement("div");
-contact.innerHTML = `
-  📞 ${info?.tel} &nbsp;&nbsp; 🌐 <a href="https://${info?.homepage}" target="_blank">${info?.homepage}</a>
-`;
+            const contact = document.createElement("div");
+            contact.innerHTML = `
+            📞 ${info?.tel} &nbsp;&nbsp; 🌐 <a href="https://${info?.homepage}" target="_blank">${info?.homepage}</a>
+            `;
 
-header.appendChild(title);
-// header.appendChild(contact);
+            header.appendChild(title);
+            // header.appendChild(contact);
 
-// 🔹 소개 및 내용 섹션
-const body = document.createElement("div");
-body.className = "event-body";
+            // 🔹 소개 및 내용 섹션
+            const body = document.createElement("div");
+            body.className = "event-body";
 
-// 개별 섹션 생성 함수
-function createSection(label, content) {
-  const section = document.createElement("div");
-  section.className = "event-section";
+            // 개별 섹션 생성 함수
+            function createSection(label, content) {
+            const section = document.createElement("div");
+            section.className = "event-section";
 
-  const heading = document.createElement("h3");
-  heading.textContent = label;
+            const heading = document.createElement("h3");
+            heading.textContent = label;
 
-  const text = document.createElement("p");
-  text.innerHTML = content?.replace(/(?<!^)(?=\d\\\.)/g, '<br><br>')?.replace(/(\d)\\\./g, "$1.")?.replace(/\\-/g, '<br>-');
+            const text = document.createElement("p");
+            text.innerHTML = content?.replace(/(?<!^)(?=\d\\\.)/g, '<br><br>')?.replace(/(\d)\\\./g, "$1.")?.replace(/\\-/g, '<br>-');
 
-  section.appendChild(heading);
-  section.appendChild(text);
-  return section;
-}
+            section.appendChild(heading);
+            section.appendChild(text);
+            return section;
+            }
 
-// 섹션 추가
+            // 섹션 추가
 
-Object.keys(info).forEach((e2) => {
-    if (e2=='homepage') {
-        body.appendChild(createSection(e2, `<a href="${info[e2].replace(/^(?!http)/, "https://")}" target="_blank">${info[e2]}</a>`));
-    } else {
-        body.appendChild(createSection(e2, info[e2]));
-    }
-})
+            Object.keys(info).forEach((e2) => {
+                if (e2=='homepage') {
+                    body.appendChild(createSection(e2, `<a href="${info[e2].replace(/^(?!http)/, "https://")}" target="_blank">${info[e2]}</a>`));
+                } else {
+                    body.appendChild(createSection(e2, info[e2]));
+                }
+            })
 
-// 🔹 카드 결합
-card.appendChild(header);
-card.appendChild(body);
+            // 🔹 카드 결합
+            card.appendChild(header);
+            card.appendChild(body);
 
-// 🔹 문서에 추가
-document.querySelector('#container .container').appendChild(card);
+            // 🔹 문서에 추가
+            document.querySelector('#container .container').appendChild(card);
 
-// 🔹 간단한 스타일 추가
-const style = document.createElement("style");
-style.textContent = `
-.event-card {
-  max-width: 700px;
-  margin: 16px auto;
-  padding: 24px;
-  border-radius: 16px;
-  background: #f9f9ff;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
-  line-height: 1.6;
-}
+            // 🔹 간단한 스타일 추가
+            const style = document.createElement("style");
+            style.textContent = `
+            .event-card {
+            max-width: 700px;
+            margin: 16px auto;
+            padding: 24px;
+            border-radius: 16px;
+            background: #f9f9ff;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            }
 
-.event-header {
-  border-bottom: 2px solid #6d81ff;
-  padding-bottom: 12px;
-  margin-bottom: 16px;
-}
+            .event-header {
+            border-bottom: 2px solid #6d81ff;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            }
 
-.event-header h2 {
-  margin: 0;
-  color: #333;
-}
+            .event-header h2 {
+            margin: 0;
+            color: #333;
+            }
 
-.event-header a {
-  color: #6d81ff;
-  text-decoration: none;
-}
+            .event-header a {
+            color: #6d81ff;
+            text-decoration: none;
+            }
 
-.event-header a:hover {
-  text-decoration: underline;
-}
+            .event-header a:hover {
+            text-decoration: underline;
+            }
 
-.event-body .event-section {
-  margin-bottom: 20px;
-}
+            .event-body .event-section {
+            margin-bottom: 20px;
+            }
 
-.event-body h3 {
-  color: #6d81ff;
-  margin-bottom: 6px;
-}
+            .event-body h3 {
+            color: #6d81ff;
+            margin-bottom: 6px;
+            }
 
-.event-body p {
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px 16px;
-  white-space: pre-wrap;
-}
-`;
-document.head.appendChild(style);
+            .event-body p {
+            background: #fff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            white-space: pre-wrap;
+            }
+            `;
+            document.head.appendChild(style);
 
             
             break;
@@ -420,6 +420,29 @@ document.head.appendChild(style);
 }
 window.loadGraph = loadGraph;
 
+
+function close() {
+    document.querySelectorAll('#modal > *').forEach((e) => {
+        e.style.display = '';
+    });
+    overlay.style.display = '';
+    document.body.style.overflow = '';
+}
+
+overlay.addEventListener('click', () => {
+    if (document.getElementById('user-data').style.display) return;
+    if (document.getElementById('notice').style.display) return;
+    close();
+});
+
+
+document.getElementById('log').onclick = () => {
+    document.body.style.overflow = 'hidden';
+    const login = document.getElementById('login');
+    overlay.style.display = 'block';
+    login.style.display = 'block';
+};
+
 async function getTourDetail(tourId) {
     let res = await fetch(url+'/tour/getTourDetail?contentId='+tourId);
     res = await res.json();
@@ -441,8 +464,8 @@ switch (tourType) {
         document.querySelector('.addr').innerText = data.tourInfo[0].addr1;
         document.querySelector('.tour-img').src = data.tourInfo[0].firstimage;
 
-        document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0].avg_rating + ")";
-        document.querySelector('.rating').style.setProperty("--rating", data.tourInfo[0].avg_rating);
+        document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0]?.avg_rating + ")";
+        document.querySelector('.rating').style.setProperty("--rating", data.tourInfo[0]?.avg_rating);
         
         async function getTour(tourList) {
             let res = await fetch(url+'/tour/getTour', {
@@ -486,7 +509,344 @@ switch (tourType) {
                 ];
             }
         }
+
+
+const req2 = {
+    "method": "GET",
+    "headers": {
+        "Content-Type":"application/json",
+    }
+}
+
+let reviews = await fetch(`${url}/review/get?requestType=tour&tour_id=${tourId}}`, req2);
+reviews = await reviews.json();
+console.log("리뷰",reviews);
+
+// 전체 컨테이너
+const container = document.createElement("div");
+// container.style.width = "600px";
+// container.style.padding = "20px";
+container.style.margin = "20px 20px auto";
+container.style.fontFamily = "sans-serif";
+
+// 제목
+const title2 = document.createElement("h3");
+title2.textContent = data.tourInfo[0].title + " 후기";
+title2.style.marginBottom = "16px";
+container.appendChild(title2);
+
+// 후기 카드 생성 함수
+function createReviewCard(review) {
+  const card = document.createElement("div");
+  card.style.display = "flex";
+  card.style.border = "1px solid #ddd";
+  card.style.borderRadius = "10px";
+  card.style.padding = "14px";
+  card.style.marginBottom = "10px";
+  card.style.background = "#f9f9f9";
+  card.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+
+  // 상단 영역 (별점 + 프로필)
+  const top = document.createElement("div");
+  top.style.display = "flex";
+  top.style.flexDirection = "column";
+  top.style.alignItems = "start";
+  top.style.justifyContent = "start";
+  top.style.marginBottom = "8px";
+
+  // 별점
+  const stars = document.createElement("div");
+  const full = "★".repeat(review.rating);
+  const empty = "☆".repeat(5 - review.rating);
+  stars.textContent = full + empty;
+  stars.style.color = "#f26b38";
+  stars.style.fontSize = "18px";
+  stars.style.letterSpacing = "2px";
+  stars.style.marginLeft = "5px";
+  top.appendChild(stars);
+
+  // 프로필 원
+  const profile = document.createElement("div");
+  profile.textContent = review.user_name[0];
+  profile.style.width = "36px";
+  profile.style.height = "36px";
+  profile.style.borderRadius = "50%";
+  profile.style.background = "#4a90e2";
+  profile.style.color = "#fff";
+  profile.style.display = "flex";
+  profile.style.alignItems = "center";
+  profile.style.justifyContent = "center";
+  profile.style.fontWeight = "bold";
+  profile.style.fontSize = "14px";
+  profile.title = review.user_name;
+  profile.style.marginRight = "8px";
+
+  const userContainer = document.createElement('div');
+  userContainer.style.display = "flex";
+  userContainer.style.whiteSpace = "nowrap";
+  userContainer.style.padding = "10px 5px";
+  // 사용자 이름
+  const user = document.createElement("div");
+  user.innerHTML = `${review.user_name} 님<br>@${review.user_id}`;
+  user.style.fontSize = "13px";
+  user.style.color = "#444";
+  user.style.marginBottom = "6px";
+  userContainer.append(profile, user);
+  top.appendChild(userContainer);
+  card.appendChild(top);
+
+  // 후기 내용
+  const text = document.createElement("p");
+  text.textContent = review.content;
+  text.style.fontSize = "14px";
+  text.style.lineHeight = "1.5";
+  text.style.marginBottom = "10px";
+  text.style.whiteSpace = "pre-line";
+  text.style.flexGrow = 1;
+  card.appendChild(text);
+
+  // 좋아요/댓글
+  const bottom = document.createElement("div");
+  bottom.style.display = "flex";
+  bottom.style.alignItems = "end";
+  bottom.style.gap = "14px";
+  bottom.style.color = "#666";
+  bottom.style.fontSize = "13px";
+
+  const thumbsUp = document.createElement("div");
+  thumbsUp.style.display = "flex";
+  thumbsUp.style.alignItems = "center";
+  const img = document.createElement('div');
+  img.style.width = "15px";
+  img.style.height = "15px";
+  img.style.backgroundImage = "url(./imgs/Thumbs_up.png)";
+  img.style.backgroundSize = "15px 15px";
+  const count = document.createElement("span");
+  count.innerText = review.likes;
+  count.style.textAlign = "center";
+  count.style.marginLeft = "5px";
+  thumbsUp.append(img, count);
+  
+  const thumbsDown = document.createElement("div");
+  thumbsDown.style.display = "flex";
+  thumbsDown.style.alignItems = "center";
+  const img2 = document.createElement('div');
+  img2.style.width = "15px";
+  img2.style.height = "15px";
+  img2.style.backgroundImage = "url(./imgs/Thumbs_down.png)";
+  img2.style.backgroundSize = "15px 15px";
+  const count2 = document.createElement("span");
+  count2.innerText = review.dislikes;
+  count2.style.textAlign = "center";
+  count2.style.marginLeft = "5px";
+  thumbsDown.append(img2, count2);
+  
+
+  bottom.appendChild(thumbsUp);
+  bottom.appendChild(thumbsDown);
+  card.appendChild(bottom);
+
+  return card;
+}
+
+// 후기들 추가
+reviews.forEach(r => container.appendChild(createReviewCard(r)));
+
+// body에 삽입
+document.querySelector('#container').appendChild(container);
+
+
+
         
+
+
+
+
+
+
+
+
+
+
+
+// 후기 입력창 컨테이너
+const reviewInputBox = document.createElement("div");
+reviewInputBox.style.display = "flex";
+reviewInputBox.style.alignItems = "center";
+reviewInputBox.style.gap = "12px";
+reviewInputBox.style.padding = "12px";
+reviewInputBox.style.borderRadius = "10px";
+reviewInputBox.style.background = "#f9f9f9";
+reviewInputBox.style.border = "1px solid rgb(221, 221, 221)";
+reviewInputBox.style.margin = "40px 20px auto";
+reviewInputBox.style.marginBottom = "10px";
+reviewInputBox.style.boxShadow = "0 1px 3px rgba(0,0,0,0.1)";
+
+// =====================
+// 왼쪽 프로필/별점 영역
+// =====================
+const leftArea = document.createElement("div");
+leftArea.style.display = "flex";
+leftArea.style.flexDirection = "column";
+leftArea.style.alignItems = "center";
+leftArea.style.gap = "8px";
+leftArea.style.width = "100px";
+
+// 별점 표시 (5점 만점)
+const stars = document.createElement("div");
+stars.style.color = "#f26b38";
+stars.style.fontSize = "18px";
+stars.style.cursor = "pointer";
+let rating = 0;
+
+// 별 5개 생성
+for (let i = 1; i <= 5; i++) {
+  const star = document.createElement("span");
+  star.textContent = "☆";
+  star.dataset.value = i;
+  star.addEventListener("click", () => {
+    rating = i;
+    [...stars.children].forEach((s, idx) => {
+      s.textContent = idx < i ? "★" : "☆";
+    });
+  });
+  stars.appendChild(star);
+}
+leftArea.appendChild(stars);
+
+// 프로필 영역
+const profileWrap = document.createElement("div");
+profileWrap.style.display = "flex";
+profileWrap.style.alignItems = "center";
+profileWrap.style.gap = "4px";
+
+// 프로필 이미지
+const profileImg = document.createElement("div");
+profileImg.style.width = "36px";
+profileImg.style.height = "36px";
+profileImg.style.borderRadius = "50%";
+profileImg.style.background = "gray";
+profileImg.style.display = "flex";
+profileImg.style.alignItems = "center";
+profileImg.style.justifyContent = "center";
+profileImg.style.color = "#fff";
+profileImg.textContent = "M"; // 성별 아이콘처럼 표시
+profileWrap.appendChild(profileImg);
+
+// 이름/ID
+const userInfo = document.createElement("div");
+userInfo.style.textAlign = "center";
+userInfo.style.fontSize = "12px";
+userInfo.style.color = "#333";
+userInfo.style.whiteSpace = "nowrap";
+userInfo.innerHTML = `${sessionStorage.getItem('name')} 님<br><span style="color:#888;">{id}</span>`;
+profileWrap.appendChild(userInfo);
+
+leftArea.appendChild(profileWrap);
+reviewInputBox.appendChild(leftArea);
+
+// =====================
+// 중앙 입력 영역
+// =====================
+const textArea = document.createElement("textarea");
+textArea.placeholder = "후기 작성하기!";
+textArea.style.flex = "1";
+textArea.style.resize = "none";
+textArea.style.height = "50px";
+textArea.style.border = "1px solid #ddd";
+textArea.style.borderRadius = "8px";
+textArea.style.padding = "10px";
+textArea.style.fontSize = "14px";
+textArea.style.outline = "none";
+textArea.style.transition = "0.2s";
+textArea.addEventListener("focus", () => {
+  textArea.style.borderColor = "#4a90e2";
+});
+textArea.addEventListener("blur", () => {
+  textArea.style.borderColor = "#ddd";
+});
+reviewInputBox.appendChild(textArea);
+
+// =====================
+// 오른쪽 버튼 영역
+// =====================
+const submitBtn = document.createElement("button");
+submitBtn.textContent = "작성하기";
+submitBtn.style.background = "#1a57e2";
+submitBtn.style.color = "#fff";
+submitBtn.style.border = "none";
+submitBtn.style.borderRadius = "8px";
+submitBtn.style.padding = "12px 18px";
+submitBtn.style.fontSize = "14px";
+submitBtn.style.cursor = "pointer";
+submitBtn.style.transition = "0.2s";
+
+submitBtn.addEventListener("mouseenter", () => {
+  submitBtn.style.background = "#0039a6";
+});
+submitBtn.addEventListener("mouseleave", () => {
+  submitBtn.style.background = "#1a57e2";
+});
+
+// 작성 이벤트
+submitBtn.addEventListener("click", async () => {
+    if (!sessionStorage.getItem('jwt')) {
+        const notice = document.getElementById('notice');
+        notice.style.display = 'block';
+        overlay.style.display = 'block';
+        notice.children[1].innerText = '해당 기능은 로그인 후 이용 가능합니다!';
+        document.querySelector('#notice > *:last-child > div').onclick = () => {
+            notice.style.display = '';
+            document.body.style.overflow = 'hidden';
+            const login = document.getElementById('login');
+            login.style.display = 'block';
+        };
+        return;
+    }
+    const text = textArea.value.trim();
+    if (!rating) return alert("별점을 선택하세요!");
+    if (!text) return alert("후기를 입력하세요!");
+    console.log(`별점: ${rating}점`);
+    console.log(rating, typeof rating);
+    
+    console.log(`후기 내용: ${text}`);
+    const req = {
+        "method": "POST",
+        "headers": {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer "+sessionStorage.getItem('jwt')
+        },
+        "body": JSON.stringify({
+            "tour_id": tourId,
+            "content": text,
+            "rating": rating,
+        })
+    }
+    let res = await fetch(url+'/review/write', req);
+    res = await res.json();
+    console.log(res);
+    alert("후기가 등록되었습니다!");    
+    textArea.value = "";
+    rating = 0;
+    [...stars.children].forEach(s => (s.textContent = "☆"));
+});
+
+reviewInputBox.appendChild(submitBtn);
+
+// =====================
+// Body에 삽입
+// =====================
+document.querySelector('#container').appendChild(reviewInputBox);
+
+
+
+
+
+
+
+
+
+
         // 처음 로드될 때 관심 관광지인지 확인할 것
         const interTour = await getInterTour();
         
@@ -498,8 +858,8 @@ switch (tourType) {
     case 'recommend-data':
         document.getElementById('addTourList').style.display = 'none';
         data = (await getTourDetail("tour-data"));
-        document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0].avg_rating + ")";
-        document.querySelector('.rating').style.setProperty("--rating", data.tourInfo[0].avg_rating);
+        document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0]?.avg_rating + ")";
+        document.querySelector('.rating').style.setProperty("--rating", data.tourInfo[0]?.avg_rating);
         // 주요 정보 로드
         document.querySelector("#container > div:nth-child(2) > div:nth-child(1) > div:nth-child(1)").click();
 

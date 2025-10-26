@@ -58,6 +58,7 @@ function login(user) {
     sessionStorage.setItem('email', user.email);
     sessionStorage.setItem('sex', user.sex);
     sessionStorage.setItem('age', user.age);
+    sessionStorage.setItem('id', user.id);
 
     // 로그아웃 처리
     setLogout();
