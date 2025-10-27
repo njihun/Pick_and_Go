@@ -231,7 +231,7 @@ async function editUserData() {
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer "+sessionStorage.get('jwt')
+                "Authorization": "Bearer "+sessionStorage.getItem('jwt')
             }
         });
         res = await res.json();
