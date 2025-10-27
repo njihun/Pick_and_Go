@@ -168,7 +168,7 @@ function travelReommend() {
         const selectedTourList = Array.from(document.querySelectorAll('.tourList.checked'));
         const body = {};
         body["location"] = tourLocation;
-        body["numofPeople"] = localStorage.getItem("numofPeople");
+        body["numofPeople"] = localStorage.getItem("numofPeople") || 0;
         body["selectedTourID"] = selectedTourList.map((e) => e.dataset.id);
         const req = {
             "method": "POST",
@@ -537,6 +537,20 @@ container.appendChild(title2);
 
 // 후기 카드 생성 함수
 function createReviewCard(review) {
+  async function getLikes() {
+      if (sessionStorage.getItem('jwt')) {
+          const req = {
+              "method": "GET",
+              "headers": {
+                  "Content-Type":"application/json",
+              }
+          }
+          let res = await fetch(`${url}/likes/get?review_id=${review.review_id}`, req);
+          res = await res.json();
+          console.log(res);
+          return res[0];
+      }
+  }
   const card = document.createElement("div");
   card.style.display = "flex";
   card.style.border = "1px solid #ddd";
@@ -612,21 +626,6 @@ function createReviewCard(review) {
   bottom.style.gap = "14px";
   bottom.style.color = "#666";
   bottom.style.fontSize = "13px";
-
-  async function getLikes() {
-      if (sessionStorage.getItem('jwt')) {
-          const req = {
-              "method": "GET",
-              "headers": {
-                  "Content-Type":"application/json",
-              }
-          }
-          let res = await fetch(`${url}/likes/get?review_id=${review.review_id}`, req);
-          res = await res.json();
-          console.log(res);
-          return res[0];
-      }
-  }
     
 
   const thumbsUp = document.createElement("div");
@@ -993,7 +992,7 @@ remove.addEventListener("mouseleave", () => {
     case 'recommend-data':
         document.getElementById('addTourList').style.display = 'none';
         data = (await getTourDetail("tour-data"));
-        document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0]?.avg_rating + ")";
+        // document.querySelector("#container > div.tourList > div:nth-child(1) > div > b").textContent = "유저 평균 평점(" +data.tourInfo[0]?.avg_rating + ")";
         document.querySelector('.rating').style.setProperty("--rating", data.tourInfo[0]?.avg_rating);
 
         document.querySelector('#container').children[1].style.display = "none";
@@ -1019,6 +1018,10 @@ remove.addEventListener("mouseleave", () => {
         }
         let res = await fetch(url+'/recommend/getRecommendTour', req);
         res = await res.json();
+
+        if (res.message == '토큰 에러') {
+            alert("토큰이 만료되었습니다! 재로그인이 필요합니다.");
+        }
         // const res = ({"message":"추천결과","result":{"elapsed_time":43.76996159553528,"data":[{"addr1":"서울특별시 종로구 창의문로11가길 4 (부암동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060100","contentid":"2554142","contenttypeid":"14","createdtime":"20180718185120","firstimage":"http://tong.visitkorea.or.kr/cms/resource/81/3384781_image2_1.JPG","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/81/3384781_image3_1.JPG","cpyrhtDivCd":"Type3","mapx":"126.9626772472","mapy":"37.5937674640","mlevel":"6","modifiedtime":"20250317110026","sigungucode":"23","tel":"","title":"유금와당박물관","zipcode":"03022","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE07","lclsSystm3":"VE070100"},{"addr1":"서울특별시 종로구 대학로 104","addr2":"","areacode":"1","cat1":"A02","cat2":"A0202","cat3":"A02020700","contentid":"126487","contenttypeid":"12","createdtime":"20031106090000","firstimage":"http://tong.visitkorea.or.kr/cms/resource/35/3506735_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/35/3506735_image3_1.jpg","cpyrhtDivCd":"Type1","mapx":"127.0027239807","mapy":"37.5802419773","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"마로니에공원","zipcode":"03087","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE03","lclsSystm3":"VE030100"},{"addr1":"서울특별시 종로구 율곡로1길 40 (사간동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060500","contentid":"3056315","contenttypeid":"14","createdtime":"20231204105201","firstimage":"http://tong.visitkorea.or.kr/cms/resource/00/3056300_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/00/3056300_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"126.9807316132","mapy":"37.5776613265","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"갤러리미르","zipcode":"03062","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE07","lclsSystm3":"VE070600"},{"addr1":"서울특별시 종로구 이화동","addr2":"","areacode":"1","cat1":"A02","cat2":"A0206","cat3":"A02060600","contentid":"3013252","contenttypeid":"14","createdtime":"20230920144035","firstimage":"http://tong.visitkorea.or.kr/cms/resource/66/3012966_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/66/3012966_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"127.0039461920","mapy":"37.5766979666","mlevel":"6","modifiedtime":"20241015145536","sigungucode":"23","tel":"","title":"JTN아트홀","zipcode":"03100","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE06","lclsSystm3":"VE060100"},{"addr1":"서울특별시 종로구 북촌로11다길 22-3 (삼청동)","addr2":"","areacode":"1","cat1":"A02","cat2":"A0205","cat3":"A02050600","contentid":"3056278","contenttypeid":"12","createdtime":"20231204104534","firstimage":"http://tong.visitkorea.or.kr/cms/resource/39/3056239_image2_1.jpg","firstimage2":"http://tong.visitkorea.or.kr/cms/resource/39/3056239_image3_1.jpg","cpyrhtDivCd":"Type3","mapx":"126.9828007145","mapy":"37.5831329500","mlevel":"6","modifiedtime":"20250718090000","sigungucode":"23","tel":"","title":"북촌전망대","zipcode":"03052","lDongRegnCd":"11","lDongSignguCd":"110","lclsSystm1":"VE","lclsSystm2":"VE01","lclsSystm3":"VE010200"}],"length":438,"server data":{"success":{"count":0,"inputTourcontentid":[]},"alreadyExists":{"count":5,"alreadyExistscontentid":["2554142","126487","3056315","3013252","3056278"]},"fail":{"count":0,"error":[]}}}});
         console.log(res);
         
