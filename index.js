@@ -142,6 +142,7 @@ function close() {
 overlay.addEventListener('click', () => {
     if (document.getElementById('user-data').style.display) return;
     if (document.getElementById('notice').style.display) return;
+    if (document.getElementById('spin').style.display) return;
     close();
 });
 
