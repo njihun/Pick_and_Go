@@ -49,3 +49,16 @@ export async function randomTourRecommned() {
         import(`./randomTour.js?ts=${Date.now()}`);
     });
 }
+
+export async function recommendPlan() {
+    if (document.querySelector('.burger-bar > div > div').classList.contains('open')) document.querySelector('.burger-bar').click(); // 열려있는 버거바 닫음
+    document.title = 'PIGO - 일정 추천';
+    const container = document.querySelector('.container');
+    container.innerHTML = '';
+    if(document.getElementById('recommend')) document.body.removeChild(document.getElementById('recommend'));
+    const temp = await fetch('./recommendPlan.html');
+    temp.text().then((e)=>{
+        container.innerHTML += e;
+        import(`./recommendPlan.js?ts=${Date.now()}`);
+    });
+}
