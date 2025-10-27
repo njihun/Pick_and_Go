@@ -231,7 +231,7 @@ async function editUserData() {
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer "+data.PIGO_token
+                "Authorization": "Bearer "+sessionStorage.get('jwt')
             }
         });
         res = await res.json();
