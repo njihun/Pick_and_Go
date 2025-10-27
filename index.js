@@ -68,7 +68,7 @@ function login(user) {
 
     // 로그아웃 처리
     setLogout();
-    location.href = location.origin + location.pathname;
+    location.reload();
 }
 
 function setLogout() {
