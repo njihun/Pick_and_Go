@@ -131,8 +131,8 @@ if (!jwt) {
 } else {
 
     try {
-        const tourList = await getTour((await getInterTour()).map((e)=>e["tour_id"]));
-        console.log(tourList);
+        // const tourList = await getTour((await getInterTour()).map((e)=>e["tour_id"]));
+        // console.log(tourList);
         const filterList = await getFilterList();
         console.log(filterList);
         
@@ -245,7 +245,6 @@ if (!jwt) {
                 if (e.tour_list.length > i2) queue.push([e.tour_list[i2], (i + 1) + 'tour']);
                 if (e.food.length > i2) queue.push([e.food[i2], (i + 1) + 'food']);
             }
-            console.log(queue);
             
             
             loadCard(queue);

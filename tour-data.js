@@ -165,6 +165,14 @@ function travelReommend() {
     const btn = document.createElement('button');
     btn.innerText = "확인";
     btn.addEventListener('click', async () => {
+        const notice = document.getElementById('notice');
+        notice.style.display = 'block';
+        overlay.style.display = 'block';
+        notice.children[1].innerText = '30초 이상 소요될 수 있습니다.';
+        document.querySelector('#notice > *:last-child > div').onclick = () => {
+            notice.style.display = '';
+            overlay.style.display = '';
+        };
         const selectedTourList = Array.from(document.querySelectorAll('.tourList.checked'));
         const body = {};
         body["location"] = tourLocation;

@@ -216,7 +216,7 @@ async function editUserData() {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json",
-            "Authorization": "Bearer "+data.PIGO_token
+            "Authorization": "Bearer "+sessionStorage.getItem('jwt')
         },
         "body": JSON.stringify({
             "newName": userData[0],
