@@ -159,6 +159,7 @@ if (!jwt) {
             removeInterTour.innerText = '삭제하기';
             removeInterTour.style.cursor = 'pointer';
             removeInterTour.style.color = 'red';
+            removeInterTour.style.whiteSpace = "nowrap";
             removeInterTour.addEventListener('click', async () => {
                 const req = {
                     "method": "POST",

@@ -139,30 +139,34 @@ if (!jwt) {
         container.innerHTML = '';
         function loadCard(tourList) {
             tourList.forEach((e, i) => {
+                console.log(e);
+                
                 const div = document.createElement('div');
                 div.classList.add('tour');
+                div.style.position = "relative";
                 const img = document.createElement('div');
                 img.classList.add('tour-img');
                 const imgElement = document.createElement('img');
-                imgElement.src = e.firstimage;
+                imgElement.src = e[0].firstimage;
                 img.appendChild(imgElement);
                 const data = document.createElement('div');
 
                 const div2 = document.createElement('div');
                 const tourName = document.createElement('div');
-                tourName.innerText = e.title;
+                tourName.innerText = e[0].title;
                 tourName.style.cursor = 'pointer';
                 tourName.style.fontSize = '20px';
                 tourName.addEventListener('click', () => {
                     const url = new URL(location.href);
                     url.searchParams.set('type', 'tour-data');
-                    url.searchParams.set('id', e.contentid);
+                    url.searchParams.set('id', e[0].contentid);
                     location.href = url.href;
                 });
                 const removeInterTour = document.createElement('div');
                 removeInterTour.innerText = '삭제하기';
                 removeInterTour.style.cursor = 'pointer';
                 removeInterTour.style.color = 'red';
+                removeInterTour.style.whiteSpace = "nowrap";
                 removeInterTour.addEventListener('click', async () => {
                     const req = {
                         "method": "POST",
@@ -173,7 +177,7 @@ if (!jwt) {
                         "body": JSON.stringify({
                             "attribute": "DELETE",
                             "contendidList": [
-                                e.contentid
+                                e[0].contentid
                             ]
                         })
                     }
@@ -189,14 +193,26 @@ if (!jwt) {
 
                 const tourData = document.createElement('div');
                 const p = document.createElement('p');
-                p.innerText = e.addr1;
+                p.innerText = e[0].addr1;
                 const p2 = document.createElement('p');
-                p2.innerText = filterList.filter((e2) => e2.Cd == e.lclsSystm1)[0].Nm;
+                p2.innerText = filterList.filter((e2) => e2.Cd == e[0].lclsSystm1)[0].Nm;
                 p2.classList.add('Nm');
                 tourData.append(p, p2);
 
                 data.append(div2, tourData);
                 div.append(img, data);
+                
+                const memo = document.createElement('div');
+                memo.innerText = `${e[1].match(/\d(?=(food|tour))/)[0]}일차 ${e[1].indexOf('food')!=-1 ? "음식" : "관광지"}`;
+                memo.style.position = 'absolute';
+                memo.style.bottom = '0';
+                memo.style.right = '0';
+                memo.style.padding = '5px';
+                memo.style.paddingLeft = "30px";
+                memo.style.paddingRight = "30px";
+                memo.style.borderRadius = "10px";
+                memo.style.backgroundColor = "#"+(e[1].indexOf('food')!=-1 ? "FAE7E7" : "D0F0DA");
+                div.appendChild(memo);
 
                 container.appendChild(div);
                 // 관광지 이름 라인에 삭제하기 버튼 포함해서 2개
@@ -224,8 +240,15 @@ if (!jwt) {
             dateCount.style.margin = "0px 20px";
             subContainer.append(leftLine, dateCount, rightLine);
             container.appendChild(subContainer);
-            loadCard(e.food);
-            loadCard(e.tour_list);
+            let queue = [];
+            for (let i2 = 0; i2 < Math.max(e.food.length, e.tour_list.length); i2++) {
+                if (e.tour_list.length > i2) queue.push([e.tour_list[i2], (i + 1) + 'tour']);
+                if (e.food.length > i2) queue.push([e.food[i2], (i + 1) + 'food']);
+            }
+            console.log(queue);
+            
+            
+            loadCard(queue);
         })
 
         document.getElementById('criteria').addEventListener('change', () => {
