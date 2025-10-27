@@ -6,6 +6,7 @@ let data;
 
 let query = new URL(location.href).searchParams;
 let tourType = query.get('type');
+let tourId = query.get('id');
 
 async function star(e) {
     let work;
@@ -64,33 +65,61 @@ async function star(e) {
 }
 window.star = star;
 
-async function setVisitedTour(e) {
-    if (e.getElementById('addTourList').classList.contains('open')) {
+
+async function getVisitedTour() {
+    const req = {
+        "method": "GET",
+        "headers":{
+            "Content-Type":"application/json",
+            "Authorization":"Bearer "+sessionStorage.getItem('jwt')
+        }
+    }
+    let res = await fetch(url+"/tour/getVisitedTour", req);
+    res = await res.json();
+    console.log(res);
+    return res.tours;
+}
+if ((await getVisitedTour()).filter((e) => e.tour_id == tourId).length==1) {
+    console.log("추가된 상태");
+    
+    document.querySelector("#addTourList > div:nth-child(2)").innerText = "방문한 관광지 삭제";
+    document.getElementById('addTourList').classList.add('open');
+} else {
+    console.log("추가되지 않은 상태");
+    document.getElementById('addTourList').classList.remove('open');
+}
+
+async function setVisitedTour() {
+    let work;
+    if (document.getElementById('addTourList').classList.contains('open')) {
         document.getElementById('addTourList').classList.remove('open');
         work = "DELETE";
+        document.querySelector("#addTourList > div:nth-child(2)").innerText = "방문한 관광지 추가";
     } else {
         document.getElementById('addTourList').classList.add('open');
         work = "ADD";
+        document.querySelector("#addTourList > div:nth-child(2)").innerText = "방문한 관광지 삭제";
     }
+    
     const req = {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json",
-            "Authorization": "Bearer "+jwt
+            "Authorization": "Bearer "+sessionStorage.getItem('jwt')
         },
         "body": JSON.stringify({
             "attribute": work,
-            "contendidList": [
-                e.dataset.id
-            ]
+            "contentid": tourId
         })
     }
-    let res = await fetch(url+'/tour/setInterTour', req);
+    let res = await fetch(url+'/tour/setVisitedTour', req);
     res = await res.json();
     console.log(res);
     
 }
 window.setVisitedTour = setVisitedTour;
+
+
 
 function travelReommend() {
     const tourList = Array.from(document.querySelectorAll('.tourList'));
@@ -464,7 +493,6 @@ async function getTourDetail(tourId) {
 switch (tourType) {
     case 'tour-data':
         document.querySelector('.star').style.display = 'none';
-        let tourId = query.get('id');
         data = (await getTourDetail(tourId));
         // 주요 정보 로드
         document.querySelector("#container > div:nth-child(2) > div:nth-child(1) > div:nth-child(1)").click();
