@@ -53,7 +53,13 @@ document.querySelector('.social > div > div:nth-of-type(1)').addEventListener('c
 
 function login(user) {
     console.log('로그인 성공: '+user);
-    sessionStorage.setItem('jwt', data.PIGO_token);
+    // data.PIGO_token이 없는 경우를 대비한 null 체크
+    if (data && data.PIGO_token) {
+        sessionStorage.setItem('jwt', data.PIGO_token);
+    } else if (sessionStorage.getItem('jwt')) {
+        // 이미 sessionStorage에 토큰이 있는 경우
+        console.log('기존 토큰 사용');
+    }
     sessionStorage.setItem('name', user.name);
     sessionStorage.setItem('email', user.email);
     sessionStorage.setItem('sex', user.sex);
@@ -235,7 +241,12 @@ async function editUserData() {
             }
         });
         res = await res.json();
-        login(res);
+        // 사용자 정보 업데이트 (data 변수가 없어도 동작하도록)
+        sessionStorage.setItem('name', res.name);
+        sessionStorage.setItem('email', res.email);
+        sessionStorage.setItem('sex', res.sex);
+        sessionStorage.setItem('age', res.age);
+        sessionStorage.setItem('id', res.ID);
         close();
         editing = false;
     }
