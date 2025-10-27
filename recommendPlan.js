@@ -1,6 +1,7 @@
 import { getFilterList } from "./parser.js";
 const url = 'https://d0g0h1.world';
 const jwt = sessionStorage.getItem('jwt');
+const data = JSON.parse(sessionStorage.getItem('plan')).result;
 async function getInterTour() {
     if (!jwt) return 'jwt is undefined';
     let res = await fetch(url+'/tour/getInterTour', {
@@ -41,7 +42,7 @@ document.querySelector('.sub-header .menu-bar>.menu-item:first-child').addEventL
         list.children[1].innerHTML = '';
         filter.forEach((e) => {
             const div = document.createElement('div');
-            div.innerText = e.Nm + "zfdghj";
+            div.innerText = e.Nm;
             if (select.includes(e.Nm)) {
                 div.style.backgroundColor = '#9ED0FF';
                 div.style.color = '#fff';
@@ -66,7 +67,7 @@ document.querySelector('.sub-header .menu-bar>.menu-item:first-child').addEventL
 
 const container = document.getElementById('container');
 function recount() {
-    document.querySelector('.count').innerText = Array.from(container.children).filter((e)=>!e.style.display).length+"개의 결과";
+    document.querySelector('.count').innerText = `${data.schedule.length-1}박 ${data.schedule.length}일`;
 }
 
 document.querySelector('.sub-header .menu-bar>.menu-item .list > :last-child > div:nth-of-type(1)').addEventListener('click', () => {
@@ -136,71 +137,96 @@ if (!jwt) {
         console.log(filterList);
         
         container.innerHTML = '';
-        tourList.forEach((e, i) => {
-            const div = document.createElement('div');
-            div.classList.add('tour');
-            const img = document.createElement('div');
-            img.classList.add('tour-img');
-            const imgElement = document.createElement('img');
-            imgElement.src = e.firstimage;
-            img.appendChild(imgElement);
-            const data = document.createElement('div');
+        function loadCard(tourList) {
+            tourList.forEach((e, i) => {
+                const div = document.createElement('div');
+                div.classList.add('tour');
+                const img = document.createElement('div');
+                img.classList.add('tour-img');
+                const imgElement = document.createElement('img');
+                imgElement.src = e.firstimage;
+                img.appendChild(imgElement);
+                const data = document.createElement('div');
 
-            const div2 = document.createElement('div');
-            const tourName = document.createElement('div');
-            tourName.innerText = e.title;
-            tourName.style.cursor = 'pointer';
-            tourName.style.fontSize = '20px';
-            tourName.addEventListener('click', () => {
-                const url = new URL(location.href);
-                url.searchParams.set('type', 'tour-data');
-                url.searchParams.set('id', e.contentid);
-                location.href = url.href;
-            });
-            const removeInterTour = document.createElement('div');
-            removeInterTour.innerText = '삭제하기';
-            removeInterTour.style.cursor = 'pointer';
-            removeInterTour.style.color = 'red';
-            removeInterTour.addEventListener('click', async () => {
-                const req = {
-                    "method": "POST",
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer "+jwt
-                    },
-                    "body": JSON.stringify({
-                        "attribute": "DELETE",
-                        "contendidList": [
-                            e.contentid
-                        ]
-                    })
-                }
-                let res = await fetch(url+'/tour/setInterTour', req);
-                res = await res.json();
-                console.log(res.message);
-                container.removeChild(div);
-                recount();
+                const div2 = document.createElement('div');
+                const tourName = document.createElement('div');
+                tourName.innerText = e.title;
+                tourName.style.cursor = 'pointer';
+                tourName.style.fontSize = '20px';
+                tourName.addEventListener('click', () => {
+                    const url = new URL(location.href);
+                    url.searchParams.set('type', 'tour-data');
+                    url.searchParams.set('id', e.contentid);
+                    location.href = url.href;
+                });
+                const removeInterTour = document.createElement('div');
+                removeInterTour.innerText = '삭제하기';
+                removeInterTour.style.cursor = 'pointer';
+                removeInterTour.style.color = 'red';
+                removeInterTour.addEventListener('click', async () => {
+                    const req = {
+                        "method": "POST",
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer "+jwt
+                        },
+                        "body": JSON.stringify({
+                            "attribute": "DELETE",
+                            "contendidList": [
+                                e.contentid
+                            ]
+                        })
+                    }
+                    let res = await fetch(url+'/tour/setInterTour', req);
+                    res = await res.json();
+                    console.log(res.message);
+                    container.removeChild(div);
+                    recount();
+                    
+                    // 기존 목록에서 이 관광지 빠지게 해야 함.
+                });
+                div2.append(tourName, removeInterTour);
+
+                const tourData = document.createElement('div');
+                const p = document.createElement('p');
+                p.innerText = e.addr1;
+                const p2 = document.createElement('p');
+                p2.innerText = filterList.filter((e2) => e2.Cd == e.lclsSystm1)[0].Nm;
+                p2.classList.add('Nm');
+                tourData.append(p, p2);
+
+                data.append(div2, tourData);
+                div.append(img, data);
+
+                container.appendChild(div);
+                // 관광지 이름 라인에 삭제하기 버튼 포함해서 2개
                 
-                // 기존 목록에서 이 관광지 빠지게 해야 함.
             });
-            div2.append(tourName, removeInterTour);
+            recount();
+        }
+        data.schedule.forEach((e, i) => {
+            const subContainer = document.createElement('div');
+            subContainer.style.display = 'flex';
+            subContainer.style.alignItems = "center";
+            subContainer.style.justifyContent = "center";
+            subContainer.style.margin = "18px";
+            const leftLine = document.createElement('div');
+            leftLine.style.flexGrow = '1';
+            leftLine.style.height = '1px';
+            leftLine.style.backgroundColor = "#000";
+            const rightLine = document.createElement('div');
+            rightLine.style.flexGrow = '1';
+            rightLine.style.height = '1px';
+            rightLine.style.backgroundColor = "#000";
 
-            const tourData = document.createElement('div');
-            const p = document.createElement('p');
-            p.innerText = e.addr1;
-            const p2 = document.createElement('p');
-            p2.innerText = filterList.filter((e2) => e2.Cd == e.lclsSystm1)[0].Nm;
-            p2.classList.add('Nm');
-            tourData.append(p, p2);
-
-            data.append(div2, tourData);
-            div.append(img, data);
-
-            container.appendChild(div);
-            // 관광지 이름 라인에 삭제하기 버튼 포함해서 2개
-            
-        });
-        recount();
+            const dateCount = document.createElement("div");
+            dateCount.innerText = (i+1) + "일차";
+            dateCount.style.margin = "0px 20px";
+            subContainer.append(leftLine, dateCount, rightLine);
+            container.appendChild(subContainer);
+            loadCard(e.food);
+            loadCard(e.tour_list);
+        })
 
         document.getElementById('criteria').addEventListener('change', () => {
             const criteria = document.getElementById('criteria').value;
