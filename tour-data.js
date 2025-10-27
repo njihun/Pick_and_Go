@@ -723,7 +723,7 @@ function createReviewCard(review) {
   bottom.appendChild(thumbsUp);
   bottom.appendChild(thumbsDown);
   card.appendChild(bottom);
-
+  card.classList.add("review");
   return card;
 }
 
@@ -848,6 +848,7 @@ reviewInputBox.appendChild(textArea);
 // =====================
 // 오른쪽 버튼 영역
 // =====================
+const btnContainer = document.createElement('div');
 const submitBtn = document.createElement("button");
 submitBtn.textContent = "작성하기";
 submitBtn.style.background = "#1a57e2";
@@ -913,16 +914,67 @@ submitBtn.addEventListener("click", async () => {
     rating = 0;
     [...stars.children].forEach(s => (s.textContent = "☆"));
 });
-
-reviewInputBox.appendChild(submitBtn);
+btnContainer.appendChild(submitBtn);
+reviewInputBox.appendChild(btnContainer);
 
 // =====================
 // Body에 삽입
 // =====================
 document.querySelector('#container').appendChild(reviewInputBox);
 
+const myReview = reviews.filter((e) => e.user_id == Number(sessionStorage.getItem('id')));
 
+  if (myReview.length > 0) {
+    textArea.value = myReview[0].content;
+    rating = myReview[0].rating;
+    [...stars.children].forEach((s, idx) => {
+    s.textContent = idx < rating ? "★" : "☆";
+    });
+    document.querySelector("#container > div:nth-child(4) > div > button").innerText = "수정하기";
 
+    const remove = document.createElement('div');
+remove.textContent = "삭제하기";
+remove.style.background = "#1a57e2";
+remove.style.color = "#fff";
+remove.style.border = "none";
+remove.style.borderRadius = "8px";
+remove.style.padding = "12px 18px";
+remove.style.fontSize = "14px";
+remove.style.cursor = "pointer";
+remove.style.transition = "0.2s";
+remove.style.marginTop = "5px";
+
+remove.addEventListener("mouseenter", () => {
+  remove.style.background = "#0039a6";
+});
+remove.addEventListener("mouseleave", () => {
+  remove.style.background = "#1a57e2";
+});
+    remove.addEventListener("click", async () => {
+        
+        const text = textArea.value.trim();
+        const req = {
+            "method": "POST",
+            "headers": {
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+sessionStorage.getItem('jwt')
+            },
+            "body": JSON.stringify({
+                "review_id": myReview[0].review_id
+            })
+        }
+        let res = await fetch(url+'/review/delete', req);
+        res = await res.json();
+        console.log(res);
+        if (res.message == '토큰 에러') {
+            alert("토큰이 만료되었습니다! 재로그인이 필요합니다.");
+        } else {
+            alert("후기가 삭제되었습니다!");
+            location.reload();
+        }
+    });
+    document.querySelector("#container > div:nth-child(4) > div:nth-child(3)").appendChild(remove);
+  }
 
 
 
@@ -946,6 +998,14 @@ document.querySelector('#container').appendChild(reviewInputBox);
 
         document.querySelector('#container').children[1].style.display = "none";
 
+        const notice = document.getElementById('notice');
+        notice.style.display = 'block';
+        overlay.style.display = 'block';
+        notice.children[1].innerText = '1분 이상 소요될 수 있습니다.';
+        document.querySelector('#notice > *:last-child > div').onclick = () => {
+            notice.style.display = '';
+            overlay.style.display = '';
+        };
         const body = {};
         body["location"] = tourLocation;
         body["numofPeople"] = localStorage.getItem("numofPeople");
