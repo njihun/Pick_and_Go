@@ -131,8 +131,6 @@ if (!jwt) {
 } else {
 
     try {
-        // const tourList = await getTour((await getInterTour()).map((e)=>e["tour_id"]));
-        // console.log(tourList);
         const filterList = await getFilterList();
         console.log(filterList);
         
@@ -160,7 +158,7 @@ if (!jwt) {
                     const url = new URL(location.href);
                     url.searchParams.set('type', 'tour-data');
                     url.searchParams.set('id', e[0].contentid);
-                    location.href = url.href;
+                    window.open(url.href, '_blank');
                 });
                 const removeInterTour = document.createElement('div');
                 removeInterTour.innerText = '삭제하기';
