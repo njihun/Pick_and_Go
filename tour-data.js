@@ -79,16 +79,6 @@ async function getVisitedTour() {
     console.log(res);
     return res.tours;
 }
-if ((await getVisitedTour()).filter((e) => e.tour_id == tourId).length==1) {
-    console.log("추가된 상태");
-    
-    document.querySelector("#addTourList > div:nth-child(2)").innerText = "방문한 관광지 삭제";
-    document.getElementById('addTourList').classList.add('open');
-} else {
-    console.log("추가되지 않은 상태");
-    document.getElementById('addTourList').classList.remove('open');
-}
-
 async function setVisitedTour() {
     let work;
     if (document.getElementById('addTourList').classList.contains('open')) {
@@ -1153,4 +1143,14 @@ remove.addEventListener("mouseleave", () => {
         break;
     default:
         break;
+}
+
+if ((await getVisitedTour()).filter((e) => e.tour_id == tourId).length==1) {
+    console.log("추가된 상태");
+    
+    document.querySelector("#addTourList > div:nth-child(2)").innerText = "방문한 관광지 삭제";
+    document.getElementById('addTourList').classList.add('open');
+} else {
+    console.log("추가되지 않은 상태");
+    document.getElementById('addTourList').classList.remove('open');
 }
